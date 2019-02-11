@@ -1,0 +1,42 @@
+# group: deprecated-2017Q3
+# sudo: true
+
+language: go
+
+go:
+  - master # This uses automatically the latest version of go
+
+addons:
+  apt:
+    packages:
+      # - python3
+      # - python3-pip
+      # - python-dev
+      # - libffi-dev
+      # - libssl-dev
+      # - python-pygments
+
+install:
+  # - pip install --user requests[security]
+  - pip install --user pygments
+  - go get github.com/spf13/hugo # This provides the latest version of Hugo to Travis CI
+
+script:
+  - pip -V
+  - hugo version
+  - pygmentize -L
+  - hugo # This commands builds your website on travis
+  # - cp CNAME public
+  - ls public
+
+deploy:
+  local_dir: public # Default static site output dir for Hugo
+  repo: fahrinh/fahrinh.github.io # This is the slug of the repo you want to deploy your site to
+  target_branch: master # GitHub pages branch to deploy to (in other cases it can be gh-pages)
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN # This is the authentication which you will setup in the next step in travis-ci dashboard
+  email: fahri.cyber@gmail.com
+  name: "Fahri Nurul Hidayat"
+  on:
+    branch: master
