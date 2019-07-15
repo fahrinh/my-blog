@@ -27,11 +27,12 @@ install:
   - git clone https://github.com/gohugoio/hugo.git
   - cd hugo
   - go install --tags extended
+  - cd ..
 
 script:
   - pip -V
   - hugo version
-  # - pygmentize -L
+  - pygmentize -L
   - hugo # This commands builds your website on travis
   # - cp CNAME public
   - ls public
