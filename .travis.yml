@@ -4,7 +4,8 @@
 language: go
 
 go:
-  - master # This uses automatically the latest version of go
+  # - master # This gccuses automatically the latest version of go
+  - 1.12.7
 
 addons:
   apt:
