@@ -32,7 +32,7 @@ install:
 script:
   - pip -V
   - hugo version
-  - pygmentize -L
+  # - pygmentize -L
   - hugo # This commands builds your website on travis
   # - cp CNAME public
   - ls public
