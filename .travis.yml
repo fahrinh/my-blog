@@ -9,7 +9,7 @@ go:
 
 env:
   - GO111MODULE=on
-  
+
 addons:
   apt:
     packages:
@@ -31,7 +31,7 @@ install:
 script:
   - pip -V
   - hugo version
-  - pygmentize -L
+  # - pygmentize -L
   - hugo # This commands builds your website on travis
   # - cp CNAME public
   - ls public
