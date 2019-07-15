@@ -19,7 +19,10 @@ addons:
 install:
   # - pip install --user requests[security]
   - pip install --user pygments
-  - go get github.com/spf13/hugo # This provides the latest version of Hugo to Travis CI
+  # - go get github.com/spf13/hugo # This provides the latest version of Hugo to Travis CI
+  - git clone https://github.com/gohugoio/hugo.git
+  - cd hugo
+  - go install --tags extended
 
 script:
   - pip -V
