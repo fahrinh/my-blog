@@ -110,9 +110,9 @@ defaultContentLanguage = "en"           # Default language to use
   [params.social]                                         # 社交链接
     # a-email = "mailto:fahri.cyber@email.com"
     # b-stack-overflow = "http://localhost:1313"
-    # c-twitter = "http://localhost:1313"
+    c-twitter = "https://twitter.com/fahri_nh"
     # d-facebook = "http://localhost:1313"
-    # e-linkedin = "http://localhost:1313"
+    e-linkedin = "https://www.linkedin.com/in/fahri-nurul-hidayat-5845b957/"
     # f-google = "http://localhost:1313"
     g-github = "https://github.com/fahrinh"
     # h-weibo = "http://localhost:1313"
