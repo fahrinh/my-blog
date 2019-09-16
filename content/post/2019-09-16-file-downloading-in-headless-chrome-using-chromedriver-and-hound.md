@@ -8,27 +8,27 @@ toc: true
 ---
 
 Recently, I am making a simple Elixir application performing some actions to
-a website in automated way. 
+a website in an automated way. 
 
-Automated testing tool is a perfect candidate to be used to help building
+The automated testing tool is a perfect candidate to be used to help to build
 application like that.
 I use [Hound](https://github.com/HashNuke/hound) as browser automation library
-and Chrome as controlled browser. 
+and Chrome as a controlled browser. 
 For the browser driver, I use [ChromeDriver](https://chromedriver.chromium.org/).
 
 # Problem
 
 Back to building my application.
 
-One of the tasks my application doing is downloading a file in the website. 
-That is not a problem in normal setup. However, the file is not downloaded when
-headless mode is enabled.
+One of the tasks my application doing is downloading a file on the website. 
+That is not a problem in a normal setup. However, the file is not downloaded when
+the headless mode is enabled.
 
 <!-- more  -->
 
 After Google has enlightened me, in security perspective, that behaviour is
 needed to prevent
-malicious website quitely download unwanted file through browser in headless mode.
+malicious website quietly download unwanted files through the browser in headless mode.
 
 # Solution
 
@@ -56,7 +56,7 @@ _Note:_  `9515` is ChromeDriver default port
 Unfortunately, Hound does not provide `send_command` as its API method. But, we
 can use `Hound.RequestUtils.make_req` to send API request to ChromeDriver.
 
-For the complete demonstration, these are steps to build sample application that
+For the complete demonstration, these are steps to build a sample application that
 download file (`Docs.zip`) in <https://elixir-lang.org/docs.html>
 
 ### Chrome & ChromeDriver Setup
@@ -76,7 +76,7 @@ download file (`Docs.zip`) in <https://elixir-lang.org/docs.html>
 
 ### Building Application
 
-Generate a new applicaton
+Generate a new application
 
 ```bash
 $ mix new file_downloader
@@ -198,4 +198,4 @@ Run the application and wait until it is finished.
 $ mix run -e FileDownloader.download_elixir_docs
 ```
 
-Downloaded file (`Docs.zip`) will be available in current directory (`file_downloader`).
+The downloaded file (`Docs.zip`) will be available in the current directory (`file_downloader`).
