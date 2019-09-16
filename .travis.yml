@@ -26,6 +26,7 @@ install:
   # - go get github.com/spf13/hugo # This provides the latest version of Hugo to Travis CI
   - git clone https://github.com/gohugoio/hugo.git
   - cd hugo
+  - git checkout v0.57.2
   - go install --tags extended
   - cd ..
 
