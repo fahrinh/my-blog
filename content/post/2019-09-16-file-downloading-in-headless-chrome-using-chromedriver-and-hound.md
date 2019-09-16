@@ -4,14 +4,11 @@ date: 2019-09-16T13:10:45+07:00
 categories: ["Elixir"]
 tags: ["Headless Chrome", "ChromeDriver", "Hound"]
 draft: false
-toc: true
 ---
 
-Recently, I am making a simple Elixir application performing some actions to
-a website in an automated way. 
+Recently, I am making a simple Elixir application performing some actions to a website in an automated way. 
 
-The automated testing tool is a perfect candidate to be used to help to build
-application like that.
+The automated testing tool is a perfect candidate to be used to help to build application like that.
 I use [Hound](https://github.com/HashNuke/hound) as browser automation library
 and Chrome as a controlled browser. 
 For the browser driver, I use [ChromeDriver](https://chromedriver.chromium.org/).
@@ -24,7 +21,7 @@ One of the tasks my application doing is downloading a file on the website.
 That is not a problem in a normal setup. However, the file is not downloaded when
 the headless mode is enabled.
 
-<!-- more  -->
+<!--more-->
 
 After Google has enlightened me, in security perspective, that behaviour is
 needed to prevent
