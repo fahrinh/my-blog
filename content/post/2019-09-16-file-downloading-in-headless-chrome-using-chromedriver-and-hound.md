@@ -6,18 +6,18 @@ tags: ["Headless Chrome", "ChromeDriver", "Hound"]
 draft: false
 ---
 
-Recently, I am making a simple Elixir application performing some actions to a website in an automated way. 
+Recently, I am making a simple Elixir application performing some actions to a website in an automated way.
 
 The automated testing tool is a perfect candidate to be used to help to build application like that.
 I use [Hound](https://github.com/HashNuke/hound) as browser automation library
-and Chrome as a controlled browser. 
+and Chrome as a controlled browser.
 For the browser driver, I use [ChromeDriver](https://chromedriver.chromium.org/).
 
 # Problem
 
 Back to building my application.
 
-One of the tasks my application doing is downloading a file on the website. 
+One of the tasks my application doing is downloading a file on the website.
 That is not a problem in a normal setup. However, the file is not downloaded when
 the headless mode is enabled.
 
@@ -31,7 +31,7 @@ malicious website quietly download unwanted files through the browser in headles
 
 For the solution, we have to instruct ChromeDriver via REST API to allow file downloading  
 
-```
+```text
 POST http://localhost:9515/session/<session_id>/chromium/send_command
 ```
 
@@ -39,7 +39,7 @@ POST http://localhost:9515/session/<session_id>/chromium/send_command
 {
     "cmd": "Page.setDownloadBehavior",
     "params": {
-        "behavior": "allow", 
+        "behavior": "allow",
         "downloadPath": "/path/download"
     }
 
@@ -81,6 +81,7 @@ $ cd file_downloader
 ```
 
 Add `hound` as a dependency library
+
 ```elixir
 # file_downloader/mix.exs
 defmodule FileDownloader.MixProject do
@@ -126,7 +127,7 @@ config :hound, driver: "chrome_driver", browser: "chrome_headless"
 ```
 
 Code the logic of our application. Step 3 describes how to enable file downloading in
-headless mode. 
+headless mode.
 
 ```elixir
 # file_downloader/lib/file_downloader.ex
@@ -189,7 +190,7 @@ defmodule FileDownloader do
 end
 ```
 
-Run the application and wait until it is finished. 
+Run the application and wait until it is finished.
 
 ```bash
 $ mix run -e FileDownloader.download_elixir_docs
