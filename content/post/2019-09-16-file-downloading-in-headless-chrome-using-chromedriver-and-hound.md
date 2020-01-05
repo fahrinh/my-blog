@@ -64,8 +64,8 @@ download file (`Docs.zip`) in <https://elixir-lang.org/docs.html>
   and ChromeDriver have same major version.
 * Start ChromeDriver and leave it running:
   
-  ```bash
-  $ chromedriver
+  ```shell
+  $ chromedriver --verbose
     Starting ChromeDriver 77.0.3865.40 (f484704e052e0b556f8030b65b953dce96503217-refs/branch-heads/3865@{#442}) on port 9515
     Only local connections are allowed.
     Please protect ports used by ChromeDriver and related test frameworks to prevent access by malicious code.
@@ -75,7 +75,7 @@ download file (`Docs.zip`) in <https://elixir-lang.org/docs.html>
 
 Generate a new application
 
-```bash
+```shell
 $ mix new file_downloader
 $ cd file_downloader
 ```
@@ -113,7 +113,7 @@ end
 
 Download the dependencies
 
-```bash
+```shell
 $ mix deps.gets
 ```
 
@@ -192,8 +192,38 @@ end
 
 Run the application and wait until it is finished.
 
-```bash
+```shell
 $ mix run -e FileDownloader.download_elixir_docs
 ```
 
 The downloaded file (`Docs.zip`) will be available in the current directory (`file_downloader`).
+
+### Troubleshooting
+
+If you got a runtime error (invalid session id) like this : 
+
+```shell
+$ mix run -e FileDownloader.download_elixir_docs
+Compiling 1 file (.ex)
+** (RuntimeError) invalid session id
+    (hound) lib/hound/request_utils.ex:52: Hound.RequestUtils.handle_response/3
+    (file_downloader) lib/file_downloader.ex:13: FileDownloader.download_elixir_docs/0
+    (stdlib) erl_eval.erl:680: :erl_eval.do_apply/6
+    (elixir) lib/code.ex:240: Code.eval_string/3
+    (elixir) lib/enum.ex:783: Enum."-each/2-lists^foreach/1-0-"/2
+    (elixir) lib/enum.ex:783: Enum.each/2
+    (mix) lib/mix/tasks/run.ex:141: Mix.Tasks.Run.run/5
+```
+
+it might be caused by different versions of Chrome and ChromeDriver.
+You can check the log of running ChromeDriver.
+
+```shell
+$ chromedriver --verbose
+...
+
+[1578222297.224][INFO]: Failed to connect to Chrome. Attempting to kill it.
+[1578222297.244][INFO]: [e5d2ce77a1b56643db3d11b6fad7d946] RESPONSE InitSession ERROR session not created: This version of ChromeDriver only supports Chrome version 77
+
+...
+```
