@@ -1,13 +1,39 @@
 @startuml
+left to right direction
 
-title Directions - Use Case Diagram
+title Simple Centralized Logging Setup
 
-actor :Admin: as A
 
-A -> (Login)
-A --> (Logout)
-A -left-> (Copy / Paste)
-A -up-> (Bulk Upload)
-A ---> (Throw Computer Out Of Window!!!)
+rectangle "App Server 01" as AppServer01 {
+    node App01
+    
+    file "log files\n<size:20><&file><&file><&file></size>" as Log01
+
+    interface "FluentD\n" as FluentD01
+}
+
+App01 --> Log01 : "produces"
+Log01 --> FluentD01
+
+
+rectangle "App Server 02" as AppServer02 {
+    node App02
+    
+    file "log files\n<size:20><&file><&file><&file></size>" as Log02
+
+    interface "FluentD\n" as FluentD02
+}
+
+App02 --> Log02 : "produces"
+Log02 --> FluentD02
+
+rectangle "Logging Server" as LogServer {
+    database "MongoDB" as MongoDB
+}
+
+
+FluentD01 --> MongoDB
+FluentD02 --> MongoDB
+
 
 @enduml
