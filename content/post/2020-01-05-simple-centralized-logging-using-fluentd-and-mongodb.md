@@ -16,10 +16,27 @@ It is heavy. ELK is mostly Java-based. Java is heavy. Yes, it is performant, yet
 
 Then, what is other viable alternatives ?
 
-Firsly, we need to define ~~the~~ **my** requirements:
+Firstly, we need to define ~~the~~ **my** requirements:
 
 - It is self hosted. As I said, to save budget.
 - It has not-so-high server requirements. The cost per GB for RAM is still high. Remember, I need to save budget.
 - It provides basic log search functionality. I can query and search log based on logging level (`INFO`, `ERROR`, etc).
 - It is easy to setup and maintenance.
-- High availability is optional. I can tolerate if unfortunately the logging server is down for a moment or  
+- High availability is optional. I can tolerate if unfortunately the logging server is down or network has a trouble causing log data not transfered to logging server.
+
+# FluentD + MongoDB
+
+TODO:
+
+# Demo System
+
+![Simple Centralized Logging Setup](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/97a0ee50e9d16756058d4cbd297bd13e743b1669/diagram/centralized-logging-setup.plantuml)
+
+
+## Our Main Application
+
+This is a sample application to produces logs.
+
+## FluentD Setup
+
+## MongoDB Setup
