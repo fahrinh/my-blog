@@ -28,9 +28,9 @@ Firstly, we need to define ~~the~~ **my** requirements:
 
 TODO:
 
-# Demo System
+# Simple Centralized Logging  
 
-![Simple Centralized Logging Setup](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/97a0ee50e9d16756058d4cbd297bd13e743b1669/diagram/centralized-logging-setup.plantuml)
+![Simple Centralized Logging Setup](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/centralized-logging-setup.plantuml)
 
 
 ## Our Main Application
