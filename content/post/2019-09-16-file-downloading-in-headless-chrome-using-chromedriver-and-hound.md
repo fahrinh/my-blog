@@ -198,6 +198,11 @@ $ mix run -e FileDownloader.download_elixir_docs
 
 The downloaded file (`Docs.zip`) will be available in the current directory (`file_downloader`).
 
+****
+Full source code:
+<https://github.com/fahrinh/blog-labs/tree/master/2019-09-16/file_downloader>
+****
+
 ### Troubleshooting
 
 If you got a runtime error (invalid session id) like this : 
