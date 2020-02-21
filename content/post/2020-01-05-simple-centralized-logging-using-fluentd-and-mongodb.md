@@ -35,7 +35,8 @@ TODO:
 
 ## Our Main Application
 
-This is a sample application to produces logs. I use Go and [Zap](https://github.com/uber-go/zap)  as logging library. I recommend JSON as log format because as structured data format, it is easy to be parsed and be processed by log agent.
+This is a sample application to produces logs. We will build it using Go and [Zap](https://github.com/uber-go/zap)  as logging library. I recommend JSON as log format because as structured data format, it is easy to be parsed and be processed by log agent.
+
 
 
 
