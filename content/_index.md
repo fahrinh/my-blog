@@ -1,6 +1,7 @@
 ---
 title: Welcome
 type: docs
+BookComments: false
 ---
 
 # Welcome to My Blog

@@ -1,6 +1,7 @@
 ---
 title: Selamat Datang
 type: docs
+BookComments: false
 ---
 
 # Selamat Datang di Blog Saya
