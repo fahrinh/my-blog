@@ -13,6 +13,8 @@ I use [Hound](https://github.com/HashNuke/hound) as browser automation library
 and Chrome as a controlled browser.
 For the browser driver, I use [ChromeDriver](https://chromedriver.chromium.org/).
 
+<!--more-->
+
 # Problem
 
 Back to building my application.
@@ -20,8 +22,6 @@ Back to building my application.
 One of the tasks my application doing is downloading a file on the website.
 That is not a problem in a normal setup. However, the file is not downloaded when
 the headless mode is enabled.
-
-<!--more-->
 
 After Google has enlightened me, in security perspective, that behaviour is
 needed to prevent
