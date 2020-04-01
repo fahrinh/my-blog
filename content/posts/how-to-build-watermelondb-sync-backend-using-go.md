@@ -8,6 +8,7 @@ draft: true
 
 
 # Init Project
+
 ```shell
 $ mkdir sync-backend
 $ cd sync-backend
@@ -23,6 +24,7 @@ $ docker run --name sync-backend-db -e POSTGRES_PASSWORD=dbpass123 -e POSTGRES_D
 ```
 
 # Setup Migration
+
 ```shell
 GO111MODULE=off go get -tags 'postgres' -u -v github.com/golang-migrate/migrate/cmd/migrate
 ```
