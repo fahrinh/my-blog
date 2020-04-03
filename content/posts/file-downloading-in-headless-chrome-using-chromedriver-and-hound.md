@@ -4,6 +4,7 @@ date: 2019-09-16T13:10:45+07:00
 categories: ["Elixir"]
 tags: ["Headless Chrome", "ChromeDriver", "Hound"]
 draft: false
+aliases: [/post/2019-09-16-file-downloading-in-headless-chrome-using-chromedriver-and-hound/]
 ---
 
 Recently, I am making a simple Elixir application performing some actions to a website in an automated way.
