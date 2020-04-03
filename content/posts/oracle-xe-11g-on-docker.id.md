@@ -4,6 +4,7 @@ date: 2017-07-23T06:26:06+07:00
 categories: ["Mini Tips"]
 tags: ["Oracle", "Docker"]
 draft: false
+aliases: [/id/post/2017-07-23-oracle-xe-11g-on-docker/]
 ---
 
 

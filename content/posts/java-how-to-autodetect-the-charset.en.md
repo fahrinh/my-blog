@@ -5,6 +5,7 @@ categories: ["Java"]
 tags: ["BOM", "Byte Order Mark", "Charset Encoding"]
 draft: false
 toc: true
+aliases: [/post/2017-11-08-java-how-to-autodetect-the-charset/]
 ---
 
 ## TLDR;

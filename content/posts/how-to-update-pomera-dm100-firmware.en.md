@@ -4,6 +4,7 @@ date: 2017-11-22T06:13:35+07:00
 categories: ["Gear"]
 tags: ["Pomera DM100"]
 draft: false
+aliases: [/post/2017-11-22-how-to-update-pomera-dm100-firmware/]
 ---
 
 Pomera DM100 is a distraction-free digital writing tool. Think mini laptop with only text editor application loaded.
