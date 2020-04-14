@@ -7,6 +7,8 @@ theme = 'hugo-book'
 disqusShortname = "fahri-blog"
 googleAnalytics = "UA-92345605-1"
 
+paginate = 5
+
 # Book configuration
 disablePathToLower = true
 enableGitInfo = true
