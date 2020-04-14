@@ -11,23 +11,23 @@ class HelloWorld {
   }
 }
 ```
-<hr/>
+
 ```kotlin
 fun main(args : Array<String>) {
     println("Hello, world!")
 }
 ```
-<hr/>
+
 ```javascript
 console.log("Hello World");
 ```
-<hr/>
+
 ```elixir
 defmodule HelloWorld do
   IO.puts "Hello, World!"
 end
 ```
-<hr/>
+
 ```go
 package main
 
