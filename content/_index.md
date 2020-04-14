@@ -1,5 +1,5 @@
 ---
-title: Welcome
+title: My Blog
 type: docs
 BookComments: false
 ---
