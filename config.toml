@@ -4,7 +4,7 @@ baseURL = 'https://fahri.id/'
 title = 'Fahri NH'
 theme = 'hugo-book'
 
-disqusShortname = "fahri-nurul-id"
+disqusShortname = "fahri-blog"
 googleAnalytics = "UA-92345605-1"
 
 # Book configuration
