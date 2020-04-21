@@ -27,7 +27,7 @@ Here are the steps:
 
 # Steps to Update Firmware
 
-1. Download the latest firmware : http://www.kingjim.co.jp/resource/media/support/pomera/DM100_V15000.zip
+1. Download the latest firmware : <https://www.kingjim.co.jp/resource-files/download/pomera/dm100/DM100_V15000.zip>
 
 2. Extract the zip file
 
