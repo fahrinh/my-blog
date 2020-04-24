@@ -108,3 +108,38 @@ defmodule BlogApp.Blog do
   # ...
 end
 ```
+
+`record_created_posts/2` & `record_updated_posts` implementation.
+`upsert_posts/3` handle both create & update case.
+
+```elixir
+defmodule BlogApp.Blog do
+  # ...
+  def record_created_posts(%Multi{} = multi, created_changes),
+    do: upsert_posts(multi, :create_posts, created_changes)
+
+  def record_updated_posts(%Multi{} = multi, updated_changes),
+    do: upsert_posts(multi, :update_posts, updated_changes)
+
+  def upsert_posts(%Multi{} = multi, _name, attrs) when is_nil(attrs), do: multi
+
+  def upsert_posts(%Multi{} = multi, name, attrs) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+
+    data =
+      attrs
+      |> Enum.map(fn row ->
+        row
+        |> Map.put(:inserted_at, now)
+        |> Map.put(:updated_at, now)
+      end)
+
+    Multi.insert_all(multi, name, Post, data,
+      conflict_target: :id,
+      on_conflict: {:replace_all_except, [:id, :inserted_at, :deleted_at]},
+      returning: true
+    )
+  end
+  # ...
+end
+```
