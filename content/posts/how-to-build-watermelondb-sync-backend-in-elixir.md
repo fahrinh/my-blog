@@ -109,10 +109,11 @@ defmodule BlogApp.Blog do
 end
 ```
 
-`record_created_posts/2` & `record_updated_posts` implementation.
+`record_created_posts/2` & `record_updated_posts/2` implementation.
 `upsert_posts/3` handle both create & update case.
 
 ```elixir
+# lib/blog_app/blog.ex
 defmodule BlogApp.Blog do
   # ...
   def record_created_posts(%Multi{} = multi, created_changes),
@@ -121,7 +122,8 @@ defmodule BlogApp.Blog do
   def record_updated_posts(%Multi{} = multi, updated_changes),
     do: upsert_posts(multi, :update_posts, updated_changes)
 
-  def upsert_posts(%Multi{} = multi, _name, attrs) when is_nil(attrs), do: multi
+  def upsert_posts(%Multi{} = multi, _name, attrs) when is_nil(attrs),
+    do: multi
 
   def upsert_posts(%Multi{} = multi, name, attrs) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
@@ -141,5 +143,24 @@ defmodule BlogApp.Blog do
     )
   end
   # ...
+end
+```
+
+`record_deleted_posts/2` implementation
+
+```elixir
+# lib/blog_app/blog.ex
+defmodule BlogApp.Blog do
+  # ...
+  def record_deleted_posts(%Multi{} = multi, deleted_ids) when is_nil(deleted_ids),
+    do: multi
+
+  def record_deleted_posts(%Multi{} = multi, deleted_ids) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+
+    query = Post |> where([p], p.id in ^deleted_ids)
+
+    Ecto.Multi.update_all(multi, :delete_posts, query, set: [deleted_at: now])
+  end
 end
 ```
