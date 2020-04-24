@@ -9,25 +9,25 @@ draft: true
 First and foremost, this tutorial will use Phoenix 1.5.1
 
 ```shell
-mix archive.uninstall phx_new
-mix archive.install hex phx_new 1.5.1
+$ mix archive.uninstall phx_new
+$ mix archive.install hex phx_new 1.5.1
 ```
 
 ```shell
-mix phx.new blog_app
+$ mix phx.new blog_app
 ```
 
 ```shell
-docker run --name blog-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=blog_app_dev -d -p 5432:5432 postgres:12.2
+$ docker run --name blog-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=blog_app_dev -d -p 5432:5432 postgres:12.2
 ```
 
 ```shell
-cd blog_app
-mix ecto.create
+$ cd blog_app
+$ mix ecto.create
 ```
 
 ```shell
-mix ecto.gen.migration create_version_seq
+$ mix ecto.gen.migration create_version_seq
 ```
 
 ```elixir
@@ -41,11 +41,11 @@ end
 ```
 
 ```shell
-mix ecto.migrate
+$ mix ecto.migrate
 ```
 
 ```shell
-mix phx.gen.schema Blog.Post posts title:string content:string likes:integer deleted_at:datetime version:integer --binary-id
+$ mix phx.gen.schema Blog.Post posts title:string content:string likes:integer deleted_at:datetime version:integer --binary-id
 ```
 
 Edit `xxx_create_posts.exs`
@@ -67,7 +67,7 @@ end
 ```
 
 ```shell
-mix ecto.migrate
+$ mix ecto.migrate
 ```
 
 Create context `BlogApp.Sync`
