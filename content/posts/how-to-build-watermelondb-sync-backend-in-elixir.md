@@ -50,19 +50,22 @@ $ mix phx.gen.schema Blog.Post posts title:string content:string likes:integer d
 
 Edit `xxx_create_posts.exs`
 
-```elixir
-add :version, :integer, default: fragment("nextval('version_seq')")
+```diff
+- add :version, :integer
++ add :version, :integer, default: fragment("nextval('version_seq')")
 ```
 
 Edit `post.ex`.
 Cast: not `:version`
 Validate: not `:likes, :deleted_at, :version`
 
-```elixir
+```diff
 def changeset(post, attrs) do
     post
-    |> cast(attrs, [:title, :content, :likes, :deleted_at])
-    |> validate_required([:title, :content])
+-    |> cast(attrs, [:title, :content, :likes, :deleted_at, :version])
++    |> cast(attrs, [:title, :content, :likes, :deleted_at])
+-    |> validate_required([:title, :content, :likes, :deleted_at])
++    |> validate_required([:title, :content])
 end
 ```
 
