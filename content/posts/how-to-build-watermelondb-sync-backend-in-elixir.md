@@ -52,7 +52,7 @@ Edit `xxx_create_posts.exs`
 
 ```diff
 - add :version, :integer
-+ add :version, :integer, default: fragment("nextval('version_seq')")
++ add :version, :bigint, default: fragment("nextval('version_seq')")
 ```
 
 Edit `post.ex`.
