@@ -87,6 +87,8 @@ end
 $ mix ecto.migrate
 ```
 
+## Push
+
 Create context `BlogApp.Sync`
 
 ```elixir
@@ -140,7 +142,7 @@ defmodule BlogApp.Blog do
     do: multi
 
   def upsert_posts(%Multi{} = multi, name, attrs) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    now = DateTime.utc_now()
 
     data =
       attrs
@@ -170,7 +172,7 @@ defmodule BlogApp.Blog do
     do: multi
 
   def record_deleted_posts(%Multi{} = multi, deleted_ids) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    now = DateTime.utc_now()
 
     query = Post |> where([p], p.id in ^deleted_ids)
 
