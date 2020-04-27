@@ -188,9 +188,9 @@ end
 defmodule BlogApp.Sync do
   # ...
 
-  def pull(lastPulledVersion) do
+  def pull(last_pulled_version) do
     %{latest_version: latest_version_posts, changes: posts_changes} =
-      Blog.list_posts_changes(lastPulledVersion)
+      Blog.list_posts_changes(last_pulled_version)
 
     latest_version =
       [latest_version_posts]
@@ -212,17 +212,17 @@ Let's implement `Blog.list_posts_changes/1`
 # lib/blog_app/blog.ex
 defmodule BlogApp.Blog do
   # ...
-  def list_posts_changes(lastPulledVersion) do
+  def list_posts_changes(last_pulled_version) do
     posts_latest =
       Post
-      |> where([p], p.version_created > ^lastPulledVersion or p.version > ^lastPulledVersion)
+      |> where([p], p.version_created > ^last_pulled_version or p.version > ^last_pulled_version)
       |> Repo.all()
 
     posts_changes =
       posts_latest
       |> Enum.group_by(fn post ->
         cond do
-          post.version_created > lastPulledVersion and is_nil(post.deleted_at) -> :created
+          post.version_created > last_pulled_version and is_nil(post.deleted_at) -> :created
           post.inserted_at != post.updated_at and is_nil(post.deleted_at) -> :updated
           not is_nil(post.deleted_at) -> :deleted
         end
