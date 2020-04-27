@@ -17,6 +17,8 @@ $ mix archive.install hex phx_new 1.5.1
 $ mix phx.new blog_app
 ```
 
+<!--more-->
+
 ```shell
 $ docker run --name blog-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=blog_app_dev -d -p 5432:5432 postgres:12.2
 ```
@@ -45,7 +47,7 @@ $ mix ecto.migrate
 ```
 
 ```shell
-$ mix phx.gen.schema Blog.Post posts title:string content:string likes:integer deleted_at:datetime version:integer version_created:integer --binary-id
+$ mix phx.gen.schema Blog.Post posts title:string content:string likes:integer deleted_at:utc_datetime_usec version:integer version_created:integer --binary-id
 ```
 
 Edit `xxx_create_posts.exs`
@@ -55,6 +57,8 @@ Edit `xxx_create_posts.exs`
 + add :version, :bigint, default: fragment("nextval('version_seq')")
 - add :version_created, :integer
 + add :version_created, :bigint, default: fragment("nextval('version_seq')")
+- timestamps()
++ timestamps([type: :utc_datetime_usec])
 ```
 
 Edit `post.ex`.
@@ -62,13 +66,21 @@ Cast: not `:version`
 Validate: not `:likes, :deleted_at, :version`
 
 ```diff
+# ...
+schema "posts" do
+    # ...
+-   timestamps()
++   timestamps([type: :utc_datetime_usec])
+end
+  
 def changeset(post, attrs) do
     post
--    |> cast(attrs, [:title, :content, :likes, :deleted_at, :version, :version_created])
-+    |> cast(attrs, [:title, :content, :likes, :deleted_at])
--    |> validate_required([:title, :content, :likes, :deleted_at, :version, :version_created])
-+    |> validate_required([:title, :content])
+-   |> cast(attrs, [:title, :content, :likes, :deleted_at, :version, :version_created])
++   |> cast(attrs, [:title, :content, :likes, :deleted_at])
+-   |> validate_required([:title, :content, :likes, :deleted_at, :version, :version_created])
++   |> validate_required([:title, :content])
 end
+# ...
 ```
 
 ```shell
