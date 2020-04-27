@@ -45,7 +45,7 @@ $ mix ecto.migrate
 ```
 
 ```shell
-$ mix phx.gen.schema Blog.Post posts title:string content:string likes:integer deleted_at:datetime version:integer --binary-id
+$ mix phx.gen.schema Blog.Post posts title:string content:string likes:integer deleted_at:datetime version:integer version_created:integer --binary-id
 ```
 
 Edit `xxx_create_posts.exs`
@@ -53,6 +53,8 @@ Edit `xxx_create_posts.exs`
 ```diff
 - add :version, :integer
 + add :version, :bigint, default: fragment("nextval('version_seq')")
+- add :version_created, :integer
++ add :version_created, :bigint, default: fragment("nextval('version_seq')")
 ```
 
 Edit `post.ex`.
@@ -62,9 +64,9 @@ Validate: not `:likes, :deleted_at, :version`
 ```diff
 def changeset(post, attrs) do
     post
--    |> cast(attrs, [:title, :content, :likes, :deleted_at, :version])
+-    |> cast(attrs, [:title, :content, :likes, :deleted_at, :version, :version_created])
 +    |> cast(attrs, [:title, :content, :likes, :deleted_at])
--    |> validate_required([:title, :content, :likes, :deleted_at])
+-    |> validate_required([:title, :content, :likes, :deleted_at, :version, :version_created])
 +    |> validate_required([:title, :content])
 end
 ```
@@ -138,7 +140,7 @@ defmodule BlogApp.Blog do
 
     Multi.insert_all(multi, name, Post, data,
       conflict_target: :id,
-      on_conflict: {:replace_all_except, [:id, :inserted_at, :deleted_at]},
+      on_conflict: {:replace_all_except, [:id, :version_created, :inserted_at, :deleted_at]},
       returning: true
     )
   end
