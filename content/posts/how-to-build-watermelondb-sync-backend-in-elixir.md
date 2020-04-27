@@ -180,3 +180,61 @@ defmodule BlogApp.Blog do
   end
 end
 ```
+
+## Pull
+
+```elixir
+# lib/blog_app/sync.ex
+defmodule BlogApp.Sync do
+  # ...
+
+  def pull(lastPulledVersion) do
+    %{latest_version: latest_version_posts, changes: posts_changes} =
+      Blog.list_posts_changes(lastPulledVersion)
+
+    latest_version =
+      [latest_version_posts]
+      |> Enum.max()
+
+    %{
+      "latestVersion" => latest_version,
+      "changes" => %{
+        "posts" => posts_changes
+      }
+    }
+  end
+end
+```
+
+Let's implement `Blog.list_posts_changes/1`
+
+```elixir
+# lib/blog_app/blog.ex
+defmodule BlogApp.Blog do
+  # ...
+  def list_posts_changes(lastPulledVersion) do
+    posts_latest =
+      Post
+      |> where([p], p.version_created > ^lastPulledVersion or p.version > ^lastPulledVersion)
+      |> Repo.all()
+
+    posts_changes =
+      posts_latest
+      |> Enum.group_by(fn post ->
+        cond do
+          post.version_created > lastPulledVersion and is_nil(post.deleted_at) -> :created
+          post.inserted_at != post.updated_at and is_nil(post.deleted_at) -> :updated
+          not is_nil(post.deleted_at) -> :deleted
+        end
+      end)
+      |> Map.update(:deleted, [], fn posts -> posts |> Enum.map(fn post -> post.id end) end)
+
+    latest_version =
+      posts_latest
+      |> Enum.flat_map(fn post -> [post.version, post.version_created] end)
+      |> Enum.max()
+
+    %{latest_version: latest_version, changes: posts_changes}
+  end
+end
+```
