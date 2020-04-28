@@ -199,7 +199,7 @@ defmodule BlogApp.Blog do
   def check_conflict_version_posts(post_changes, last_pulled_version) do
     ids =
       Enum.concat(post_changes["created"], post_changes["updated"])
-      |> Enum.map(fn post -> post.id end)
+      |> Enum.map(fn post -> post["id"] end)
       |> Enum.concat(post_changes["deleted"])
 
     count =
