@@ -53,12 +53,27 @@ $ mix phx.gen.schema Blog.Post posts title:string content:string likes:integer d
 Edit `xxx_create_posts.exs`
 
 ```diff
-- add :version, :integer
-+ add :version, :bigint, default: fragment("nextval('version_seq')")
-- add :version_created, :integer
-+ add :version_created, :bigint, default: fragment("nextval('version_seq')")
-- timestamps()
-+ timestamps([type: :utc_datetime_usec])
+# priv/repo/migrations/xxx_create_posts.exs
+defmodule BlogApp.Repo.Migrations.CreatePosts do
+  use Ecto.Migration
+
+  def change do
+    create table(:posts, primary_key: false) do
+      add :id, :binary_id, primary_key: true
+      add :title, :string
+      add :content, :string
+      add :likes, :integer
+      add :deleted_at, :utc_datetime_usec
+-     add :version, :integer
++     add :version, :bigint, default: fragment("nextval('version_seq')")
+-     add :version_created, :integer
++     add :version_created, :bigint, default: fragment("nextval('version_seq')")
+-     timestamps()
++     timestamps([type: :utc_datetime_usec])
+    end
+
+  end
+end
 ```
 
 Edit `post.ex`.
@@ -66,21 +81,35 @@ Cast: not `:version`
 Validate: not `:likes, :deleted_at, :version`
 
 ```diff
-# ...
-schema "posts" do
-    # ...
+# lib/blog_app/blog/post.ex
+defmodule BlogApp.Blog.Post do
+  use Ecto.Schema
+  import Ecto.Changeset
+
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
++  @derive {Jason.Encoder, only: [:id, :title, :content, :likes]}
+  schema "posts" do
+    field :content, :string
+    field :deleted_at, :utc_datetime_usec
+    field :likes, :integer
+    field :title, :string
+    field :version, :integer
+    field :version_created, :integer
+
 -   timestamps()
 +   timestamps([type: :utc_datetime_usec])
-end
-  
-def changeset(post, attrs) do
+  end
+
+  @doc false
+  def changeset(post, attrs) do
     post
 -   |> cast(attrs, [:title, :content, :likes, :deleted_at, :version, :version_created])
 +   |> cast(attrs, [:title, :content, :likes, :deleted_at])
 -   |> validate_required([:title, :content, :likes, :deleted_at, :version, :version_created])
 +   |> validate_required([:title, :content])
+  end
 end
-# ...
 ```
 
 ```shell
