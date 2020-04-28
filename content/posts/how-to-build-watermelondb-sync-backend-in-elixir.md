@@ -96,9 +96,9 @@ Create context `BlogApp.Sync`
 defmodule BlogApp.Sync do
   alias BlogApp.{Repo, Blog}
 
-  def push(changes) do
+  def push(changes, last_pulled_version) do
     Ecto.Multi.new()
-    |> Blog.record_post(changes["post"])
+    |> Blog.record_posts(changes["posts"], last_pulled_version)
     |> Repo.transaction()
   end
 end
@@ -114,16 +114,54 @@ defmodule BlogApp.Blog do
   alias BlogApp.Repo
   alias BlogApp.Blog.Post
 
-  def record_posts(%Multi{} = multi, post_changes) do
-    multi
-    |> record_created_posts(post_changes["created"])
-    |> record_updated_posts(post_changes["updated"])
-    |> record_deleted_posts(post_changes["deleted"])
+  def record_posts(%Multi{} = multi, post_changes, last_pulled_version) do
+    case check_conflict_version_posts(post_changes, last_pulled_version) do
+      :no_conflict ->
+        multi
+        |> record_created_posts(post_changes["created"])
+        |> record_updated_posts(post_changes["updated"])
+        |> record_deleted_posts(post_changes["deleted"])
+
+      _ -> {:error, "conflict version"}
+    end
   end
 
   # ...
 end
 ```
+
+### Check Conflict
+
+`check_conflict_version_posts/2` implementation.
+
+```elixir
+# lib/blog_app/blog.ex
+defmodule BlogApp.Blog do
+  # ...
+  def check_conflict_version_posts(post_changes, last_pulled_version) do
+    ids =
+      Enum.concat(post_changes["created"], post_changes["updated"])
+      |> Enum.map(fn post -> post.id end)
+      |> Enum.concat(post_changes["deleted"])
+
+    count =
+      Post
+      |> select([p], count(p.version))
+      |> where([p], p.id in ^ids)
+      |> where([p], p.version > ^last_pulled_version or p.version_created > ^last_pulled_version)
+      |> Repo.one()
+
+    case count do
+      0 -> :no_conflict
+      _ -> :conflict
+    end
+  end
+  # ...
+end
+```
+
+
+### Storing Record Changes 
 
 `record_created_posts/2` & `record_updated_posts/2` implementation.
 `upsert_posts/3` handle both create & update case.
