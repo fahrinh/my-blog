@@ -87,6 +87,35 @@ end
 $ mix ecto.migrate
 ```
 
+## Sync Endpoint
+
+Sync endpoint will be handled by:
+
+- push: `POST /api/sync?lastPulledVersion=<lastPulledVersion>`
+- pull: `GET /api/sync?lastPulledVersion=<lastPulledVersion>`
+
+Edit `lib/blog_app_web/router.ex`
+
+```elixir
+# lib/blog_app_web/router.ex
+defmodule BlogAppWeb.Router do
+    # ...
+    scope "/api", BlogAppWeb do
+        pipe_through :api
+        post "/sync", SyncController, :push
+        get "/sync", SyncController, :pull
+    end
+    # ...
+end
+```
+
+Create `lib/blog_app_web/controllers/sync_controller.ex`
+
+```elixir
+# lib/blog_app_web/controllers/sync_controller.ex
+
+```
+
 ## Push
 
 Create context `BlogApp.Sync`
@@ -270,7 +299,7 @@ defmodule BlogApp.Blog do
     latest_version =
       posts_latest
       |> Enum.flat_map(fn post -> [post.version, post.version_created] end)
-      |> Enum.max()
+      |> Enum.max(fn -> 0 end)
 
     %{latest_version: latest_version, changes: posts_changes}
   end
