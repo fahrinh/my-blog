@@ -173,15 +173,16 @@ defmodule BlogApp.Blog do
   alias BlogApp.Blog.Post
 
   def record_posts(%Multi{} = multi, post_changes, last_pulled_version) do
-    case check_conflict_version_posts(post_changes, last_pulled_version) do
-      :no_conflict ->
-        multi
-        |> record_created_posts(post_changes["created"])
-        |> record_updated_posts(post_changes["updated"])
-        |> record_deleted_posts(post_changes["deleted"])
-
-      _ -> {:error, "conflict version"}
-    end
+    multi
+    |> Multi.run(:check_conflict_posts, fn _, _changes ->
+      case check_conflict_version_posts(post_changes, last_pulled_version) do
+        :no_conflict -> {:ok, :no_conflict}
+        :conflict -> {:error, :conflict}
+      end
+    end)
+    |> record_created_posts(post_changes["created"])
+    |> record_updated_posts(post_changes["updated"])
+    |> record_deleted_posts(post_changes["deleted"])
   end
 
   # ...
@@ -244,8 +245,9 @@ defmodule BlogApp.Blog do
       attrs
       |> Enum.map(fn row ->
         row
-        |> Map.put(:inserted_at, now)
-        |> Map.put(:updated_at, now)
+        |> Map.put("inserted_at", now)
+        |> Map.put("updated_at", now)
+        |> key_to_atom()
       end)
 
     Multi.insert_all(multi, name, Post, data,
@@ -253,6 +255,13 @@ defmodule BlogApp.Blog do
       on_conflict: {:replace_all_except, [:id, :version_created, :inserted_at, :deleted_at]},
       returning: true
     )
+  end
+
+  def key_to_atom(map) do
+    Enum.reduce(map, %{}, fn
+      {key, value}, acc when is_atom(key) -> Map.put(acc, key, value)
+      {key, value}, acc when is_binary(key) -> Map.put(acc, String.to_existing_atom(key), value)
+    end)
   end
   # ...
 end
