@@ -138,10 +138,41 @@ defmodule BlogAppWeb.Router do
 end
 ```
 
+### Controller
+
 Create `lib/blog_app_web/controllers/sync_controller.ex`
 
 ```elixir
 # lib/blog_app_web/controllers/sync_controller.ex
+defmodule BlogAppWeb.SyncController do
+  use BlogAppWeb, :controller
+  alias BlogApp.Sync
+
+  def push(
+        %Plug.Conn{
+          body_params: req_body,
+          query_params: %{"lastPulledVersion" => last_pulled_version}
+        } = conn,
+        _params
+      ) do
+
+    case Sync.push(req_body, String.to_integer(last_pulled_version)) do
+      {:ok, _} -> send_resp(conn, 200, "OK")
+      _ -> send_resp(conn, 400, "Not OK")
+    end
+  end
+
+  def pull(
+        %Plug.Conn{
+          query_params: %{"lastPulledVersion" => last_pulled_version}
+        } = conn,
+        _params
+      ) do
+    changes = Sync.pull(String.to_integer(last_pulled_version))
+
+    json(conn, changes)
+  end
+end
 
 ```
 
