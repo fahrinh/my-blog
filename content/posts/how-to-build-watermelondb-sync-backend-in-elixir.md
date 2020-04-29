@@ -2,7 +2,7 @@
 title: "How to Build WatermelonDB Sync Backend in Elixir"
 date: 2020-04-24T21:27:12+07:00
 categories: ["Elixir"]
-tags: ["WatermelonDB", "Sync Backend"]
+tags: ["Phoenix", "WatermelonDB", "Sync Backend"]
 draft: true
 ---
 
