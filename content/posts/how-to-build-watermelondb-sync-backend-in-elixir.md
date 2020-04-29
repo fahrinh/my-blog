@@ -101,14 +101,7 @@ defmodule BlogApp.Blog.Post do
 +   timestamps([type: :utc_datetime_usec])
   end
 
-  @doc false
-  def changeset(post, attrs) do
-    post
--   |> cast(attrs, [:title, :content, :likes, :deleted_at, :version, :version_created])
-+   |> cast(attrs, [:title, :content, :likes, :deleted_at])
--   |> validate_required([:title, :content, :likes, :deleted_at, :version, :version_created])
-+   |> validate_required([:title, :content])
-  end
+  # ...
 end
 ```
 
