@@ -356,6 +356,8 @@ defmodule BlogApp.Blog do
           not is_nil(post.deleted_at) -> :deleted
         end
       end)
+      |> Map.update(:created, [], fn posts -> posts end)
+      |> Map.update(:updated, [], fn posts -> posts end)
       |> Map.update(:deleted, [], fn posts -> posts |> Enum.map(fn post -> post.id end) end)
 
     latest_version =
