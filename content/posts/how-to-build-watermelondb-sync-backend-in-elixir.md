@@ -6,6 +6,10 @@ tags: ["Phoenix", "WatermelonDB", "Sync Backend"]
 draft: true
 ---
 
+TODO:
+- Table explaining columns on client & db. LocalDB: column, ServerDB: column, description, on create, on update, on delete.
+- Seq Diagram: 1. Existing WatermelonDB flow 2. Proposed solution. 'People' = Client
+
 First and foremost, this tutorial will use Phoenix 1.5.1
 
 ```shell
