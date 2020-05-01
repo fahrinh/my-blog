@@ -324,7 +324,7 @@ defmodule BlogApp.Sync do
       Blog.list_posts_changes(last_pulled_version)
 
     latest_version =
-      [latest_version_posts]
+      [last_pulled_version, latest_version_posts]
       |> Enum.max()
 
     %{
