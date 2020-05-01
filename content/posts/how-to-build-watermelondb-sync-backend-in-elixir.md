@@ -271,6 +271,7 @@ defmodule BlogApp.Blog do
         row
         |> Map.put("inserted_at", now)
         |> Map.put("updated_at", now)
+        |> Map.take(["id", "title", "content", "likes", "inserted_at", "updated_at"])
         |> key_to_atom()
       end)
 
