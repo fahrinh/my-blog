@@ -123,9 +123,10 @@ Edit `lib/blog_app_web/router.ex`
 defmodule BlogAppWeb.Router do
     # ...
     scope "/api", BlogAppWeb do
-        pipe_through :api
-        post "/sync", SyncController, :push
-        get "/sync", SyncController, :pull
+      pipe_through :api
+
+      post "/sync/push", SyncController, :push
+      get "/sync/pull", SyncController, :pull
     end
     # ...
 end
