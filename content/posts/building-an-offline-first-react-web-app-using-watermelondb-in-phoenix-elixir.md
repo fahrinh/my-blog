@@ -14,7 +14,7 @@ We will build a web application that supports local db synced with remote db. Th
 
 ```shell
 $ cd assets
-$ npm i react react-dom @nozbe/watermelondb @nozbe/with-observables
+$ npm i react react-dom uuid @nozbe/watermelondb @nozbe/with-observables
 $ npm i -D @babel/preset-react @babel/plugin-proposal-decorators @babel/plugin-proposal-class-properties @babel/plugin-transform-runtime
 ```
 
