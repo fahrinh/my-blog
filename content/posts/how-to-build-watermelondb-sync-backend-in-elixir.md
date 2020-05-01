@@ -304,10 +304,18 @@ defmodule BlogApp.Blog do
 
   def record_deleted_posts(%Multi{} = multi, deleted_ids) do
     now = DateTime.utc_now()
+  
+    data =
+      deleted_ids
+      |> Enum.map(fn id ->
+        %{id: id, deleted_at: now}
+      end)
 
-    query = Post |> where([p], p.id in ^deleted_ids)
-
-    Ecto.Multi.update_all(multi, :delete_posts, query, set: [deleted_at: now])
+    Multi.insert_all(multi, :delete_posts, Post, data,
+      conflict_target: :id,
+      on_conflict: {:replace, [:deleted_at, :version]},
+      returning: true
+    )
   end
 end
 ```
