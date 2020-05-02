@@ -112,11 +112,14 @@ While in iterations of prototyping sync backend, I took another approach for tra
 WatermelonDB sync documentation is good enough to gives a tips for implementing sync backend by using timestamp. But, it also states:
 
   > For extra safety, we recommend adding a MySQL/PostgreSQL procedure that will ensure last_modified uniqueness and monotonicity (will increment it by one if a record with this last_modified or greater already exists in the database).
-  
-  > This protects against weird edge cases related to server clock time changes (NTP time sync, leap seconds, etc.) (**Alternatively, instead of using timestamps, you could use auto-incrementing couters, but you'd have to ensure they are consistent across the whole database, not just one table**)
 
+  > This protects against **weird edge cases related to server clock time changes (NTP time sync, leap seconds, etc.)** (**Alternatively, instead of using timestamps, you could use auto-incrementing couters, but you'd have to ensure they are consistent across the whole database, not just one table**)
 
-
+I completely agree with this.
+A dependency on server clock time reliability for data changes is a problem.
+The changes of data have to be recorded in *correct order*.
+Newer changes is recorder after older changes. TODO: fix this
+It will be a major headache if that bug happened in production.
 
 ## Workaround for Sync on Client Side
 
