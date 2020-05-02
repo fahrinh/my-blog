@@ -25,15 +25,46 @@ $ mix phx.new blog_app
 
 <!--more-->
 
-# Draft
+# WatermelonDB
 
-WatermelonDB is a reactive database for React frontend application that supports data synchronization.
+[WatermelonDB](https://github.com/Nozbe/WatermelonDB) is a reactive database for React frontend application that supports data synchronization.
+
+<gambar>
+
 What I like about this database is you can bring your own sync backend (HTTP-based) as long as it complies with this spec:
 
 | Operation |       Request Params / Body        |          Response Body          |
 |-----------|:----------------------------------:|:-------------------------------:|
 | Pull      |          - `lastPulledAt`: _integer, Unix time in milliseconds (ms)_         | - `changes`: _(JSON)_ <br/> - `timestamp`: _integer, Unix time in milliseconds (ms)_ |
 | Push      | - `changes`: _(JSON)_ <br/> - `lastPulledAt`: _integer, Unix time in milliseconds (ms)_ |               _X_               |
+
+This is a brief how pull and push operation works. Please refer to [Sync documentation](https://nozbe.github.io/WatermelonDB/Advanced/Sync.html) for the details
+
+## Pull Operation
+
+Request:
+
+- `lastPulledAt` is a timestamp retrieved in the last/previous pull operation
+
+Response:
+
+- `changes` is a JSON containing changes of data (created, updated, deleted) since `lastPulledAt` at server
+- `timestamp` is a timestamp that will replace `lastPulledAt` for the next pull operation.
+
+## Push Operation
+
+Request:
+
+- `changes` is a JSON containing data changes on the client (local) that will be   
+- `lastPulledAt`
+
+Response:
+
+No specified response
+
+## `changes` Example
+
+## Sync Flow
 
 
 ```shell
