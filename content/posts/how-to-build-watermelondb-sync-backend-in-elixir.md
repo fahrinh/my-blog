@@ -52,6 +52,40 @@ Response:
 
 ## `changes` Example
 
+```json
+{
+    "posts": {
+        "created": [
+            {
+                "id": "d1633195-156f-4f9d-9ccf-7740203b080e",
+                "_status": "created",
+                "_changed": "",
+                "title": "Phoenix",
+                "content": "Phoenix is a web framework for Elixir",
+                "likes": 200,
+                "created_at": 1588400731806,
+                "updated_at": 1588400731806
+            }
+        ],
+        "updated": [
+            {
+                "id": "2d7c6a82-eb04-47b1-be52-6f8f6cf806ff",
+                "_status": "updated",
+                "_changed": "updated_at,title,content,likes",
+                "title": "Elixir",
+                "content": "Elixir is amazing",
+                "likes": 100,
+                "created_at": 1588389279195,
+                "updated_at": 1588400691047
+            }
+        ],
+        "deleted": [
+            "2b130e52-079d-4b31-9f42-ce257cf546f0"
+        ]
+    }
+}
+```
+
 ## Sync Flow
 
 First and foremost, this tutorial will use Phoenix 1.5.1
