@@ -23,6 +23,18 @@ enableRobotsTXT = true
 [markup.tableOfContents]
   startLevel = 1
 
+[markup.highlight]
+  # style = "native"
+  style = "perldoc"
+  # style = "friendly"
+  # style = "fruity" # no diff
+  # style = "solarized-light"
+  # style = "github"
+  # style = "emacs"
+  # style = "paraiso-dark"
+  # style = "solarized-dark256"
+  # style = "dracula"
+
 # Multi-lingual mode config
 # There are different options to translate files
 # See https://gohugo.io/content-management/multilingual/#translation-by-filename
