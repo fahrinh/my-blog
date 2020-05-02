@@ -26,7 +26,7 @@ What I like about this database is you can bring your own sync backend (HTTP-bas
 | Pull      |          - `lastPulledAt`: _integer, Unix time in milliseconds (ms)_         | - `changes`: _(JSON)_ <br/> - `timestamp`: _integer, Unix time in milliseconds (ms)_ |
 | Push      | - `changes`: _(JSON)_ <br/> - `lastPulledAt`: _integer, Unix time in milliseconds (ms)_ |               _X_               |
 
-This is a brief how pull and push operation works. Please refer to [Sync documentation](https://nozbe.github.io/WatermelonDB/Advanced/Sync.html) for the details
+The following is a brief how pull and push operation works. Please refer to [Sync documentation](https://nozbe.github.io/WatermelonDB/Advanced/Sync.html) for the details
 
 ## Pull Operation
 
