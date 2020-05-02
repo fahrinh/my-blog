@@ -101,6 +101,9 @@ Response:
 
 ## Sync Flow
 
+# Proposed Alternative Sync Approach
+
+## Sync Backend Implementation
 First and foremost, this tutorial will use Phoenix 1.5.1
 
 
@@ -203,7 +206,7 @@ end
 $ mix ecto.migrate
 ```
 
-## Sync Endpoint
+### Sync Endpoint
 
 Sync endpoint will be handled by:
 
@@ -226,7 +229,7 @@ defmodule BlogAppWeb.Router do
 end
 ```
 
-### Controller
+#### Controller
 
 Create `lib/blog_app_web/controllers/sync_controller.ex`
 
@@ -261,7 +264,7 @@ defmodule BlogAppWeb.SyncController do
 end
 ```
 
-## Push
+### Push
 
 Create context `BlogApp.Sync`
 
@@ -332,7 +335,7 @@ defmodule BlogApp.Blog do
 end
 ```
 
-### Check Conflict
+#### Check Conflict
 
 `check_conflict_version_posts/2` implementation.
 
@@ -363,7 +366,7 @@ end
 ```
 
 
-### Storing Record Changes 
+#### Storing Record Changes 
 
 `record_created_posts/2` & `record_updated_posts/2` implementation.
 `upsert_posts/3` handle both create & update case.
@@ -438,7 +441,7 @@ defmodule BlogApp.Blog do
 end
 ```
 
-## Pull
+### Pull
 
 ```elixir
 # lib/blog_app/sync.ex
