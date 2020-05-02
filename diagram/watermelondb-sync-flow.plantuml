@@ -21,6 +21,8 @@ ServerDB -> BackendApp : ""changes"" \n& ""timestamp""
 BackendApp -> ReactApp : ""changes"" \n& ""timestamp""
 deactivate BackendApp
 
+ReactApp -> ReactApp : for next pull, set\n""lastPulledAt"" = ""timestamp""
+
 ReactApp -> BackendApp : ""push(lastPulledAt,""\n""changes)""
 activate BackendApp
 
