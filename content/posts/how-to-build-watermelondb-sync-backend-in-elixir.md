@@ -12,6 +12,8 @@ TODO:
 
 First and foremost, this tutorial will use Phoenix 1.5.1
 
+
+
 ```shell
 $ mix archive.uninstall phx_new
 $ mix archive.install hex phx_new 1.5.1
@@ -22,6 +24,17 @@ $ mix phx.new blog_app
 ```
 
 <!--more-->
+
+# Draft
+
+WatermelonDB is a reactive database for React frontend application that supports data synchronization.
+What I like about this database is you can bring your own sync backend (HTTP-based) as long as it complies with this spec:
+
+| Operation |       Request Params / Body        |          Response Body          |
+|-----------|:----------------------------------:|:-------------------------------:|
+| Pull      |          - `lastPulledAt`: _integer, Unix time in milliseconds (ms)_         | - `changes`: _(JSON)_ <br/> - `timestamp`: _integer, Unix time in milliseconds (ms)_ |
+| Push      | - `changes`: _(JSON)_ <br/> - `lastPulledAt`: _integer, Unix time in milliseconds (ms)_ |               _X_               |
+
 
 ```shell
 $ docker run --name blog-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=blog_app_dev -d -p 5432:5432 postgres:12.2
