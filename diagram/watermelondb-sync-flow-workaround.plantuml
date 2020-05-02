@@ -1,0 +1,50 @@
+@startuml
+title WatermelonDB Sync Flow
+
+actor User
+
+participant "ReactApp+WatermelonDB" as ReactApp
+participant BackendApp
+database ServerDB
+
+User -> ReactApp : click Sync\n(or auto sync)
+activate ReactApp
+
+autonumber
+
+ReactApp -> ReactApp : init ""latestVersionOfSession""
+
+ReactApp -> BackendApp : ""pull(lastPulledAt)""
+activate BackendApp
+
+BackendApp -> ServerDB : get ""changes"" \n& ""latestVersion""
+ServerDB -> BackendApp : ""changes"" \n& ""latestVersion""
+
+BackendApp -> ReactApp : ""changes"" \n& ""latestVersion""
+deactivate BackendApp
+
+ReactApp -> ReactApp : for next pull, set\n""lastPulledAt"" = ""latestVersion""
+ReactApp -> ReactApp : set\n""latestVersionOfSession"" = ""latestVersion""
+
+ReactApp -> BackendApp : ""push(lastPulledAt,""\n""changes)""
+activate BackendApp
+
+BackendApp -> ServerDB : check conflict\nusing ""lastPulledAt""
+ServerDB -> BackendApp
+
+BackendApp -> ServerDB : if no conflict,\nrecord ""changes""
+ServerDB -> BackendApp
+
+BackendApp -> BackendApp : get ""latestVersion""\nof recorded ""changes""
+
+BackendApp -> ReactApp : ""latestVersion""
+deactivate BackendApp
+
+ReactApp -> ReactApp : set\n""latestVersionOfSession"" = ""latestVersion""
+
+autonumber stop
+
+ReactApp -> User
+deactivate ReactApp
+
+@enduml

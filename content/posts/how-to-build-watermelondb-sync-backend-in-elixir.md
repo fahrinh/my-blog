@@ -133,7 +133,12 @@ Please look again at diagram <a href="#sync-flow">Sync Flow</a> above.
 
 In **5**, after WatermelonDB receives `changes` & `timestamp`, internally, `timestamp` value is set as `lastPulledAt` for the next pull operation. That is not problem.
 
-At first, I assume it will have same mechanism for push operation. We got new `timestamp` that will be become the next `lastPulledAt`. But I am wrong. Look at **11**. No response at all for push operation. It means for the next pull operation, we will get changes that we've just pushed on previous push operation. Well, it actually mentioned [in the documentation](https://nozbe.github.io/WatermelonDB/Advanced/Sync.html#current-limitations):
+At first, I assume it will have same mechanism for push operation.
+We got new `timestamp` that will be become the next `lastPulledAt`.
+But I am wrong.
+Look at **11**.
+No response at all for push operation AND no way to explicitly set `lastPulledAt` on the push operation.
+It means for the next pull operation, we will get changes that we've just pushed on previous push operation. Well, it actually mentioned [in the documentation](https://nozbe.github.io/WatermelonDB/Advanced/Sync.html#current-limitations):
 
  > Current limitations
  
