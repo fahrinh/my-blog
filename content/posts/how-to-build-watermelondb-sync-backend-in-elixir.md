@@ -109,7 +109,7 @@ While in iterations of prototyping sync backend, I took another approach for tra
 
 ## Using Auto-incrementing Counter (Version) for Tracking Changes
 
-WatermelonDB sync documentation is good enough to gives a tips for implementing sync backend by using timestamp. But, it also states:
+WatermelonDB sync documentation is good enough to gives a tips for implementing sync backend by using timestamp. However, it also states:
 
   > For extra safety, we recommend adding a MySQL/PostgreSQL procedure that will ensure last_modified uniqueness and monotonicity (will increment it by one if a record with this last_modified or greater already exists in the database).
 
@@ -118,8 +118,9 @@ WatermelonDB sync documentation is good enough to gives a tips for implementing 
 I completely agree with this.
 A dependency on server clock time reliability for data changes is a problem.
 The changes of data have to be recorded in *correct order*.
-Newer changes is recorder after older changes. TODO: fix this
-It will be a major headache if that bug happened in production.
+Out-of-order records will be a major headache if that bug happened in production.
+
+I followed its suggestion to use auto-incrementing counter. For tracking changes, it needs: a global sequence (`version_seq`) & each table have columns: `version`, `version_created`, and `deleted_at`.  
 
 ## Workaround for Sync on Client Side
 
