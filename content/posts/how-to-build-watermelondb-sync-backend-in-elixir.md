@@ -105,14 +105,29 @@ Response:
 
 # Proposed Alternative Sync Approach
 
-While in iterations of prototyping sync backend, I took another approach for tracking changes and made a workaround for 
+While in iterations of prototyping sync backend, I took another approach for tracking changes and made a workaround for an issue in regard to WatermelonDB sync behaviour on client side.
+
+## Using Auto-incrementing Counter (Version) for Tracking Changes
+
+WatermelonDB sync documentation is good enough to gives a tips for implementing sync backend by using timestamp. But, it also states:
+
+  > For extra safety, we recommend adding a MySQL/PostgreSQL procedure that will ensure last_modified uniqueness and monotonicity (will increment it by one if a record with this last_modified or greater already exists in the database).
+  
+  > This protects against weird edge cases related to server clock time changes (NTP time sync, leap seconds, etc.) (**Alternatively, instead of using timestamps, you could use auto-incrementing couters, but you'd have to ensure they are consistent across the whole database, not just one table**)
 
 
-## Application Example: Blog App
+
+
+## Workaround for Sync on Client Side
+
+I don't know why this library designed to behave like this. It raised [an issue for complaining/questioning about that](https://github.com/Nozbe/WatermelonDB/issues/649).
+
+
+# Application Example: Blog App
 
 
 
-## Sync Backend Implementation
+# Sync Backend Implementation
 First and foremost, this tutorial will use Phoenix 1.5.1
 
 
@@ -215,7 +230,7 @@ end
 $ mix ecto.migrate
 ```
 
-### Sync Endpoint
+## Sync Endpoint
 
 Sync endpoint will be handled by:
 
@@ -238,7 +253,7 @@ defmodule BlogAppWeb.Router do
 end
 ```
 
-#### Controller
+### Controller
 
 Create `lib/blog_app_web/controllers/sync_controller.ex`
 
@@ -273,7 +288,7 @@ defmodule BlogAppWeb.SyncController do
 end
 ```
 
-### Push
+## Push
 
 Create context `BlogApp.Sync`
 
@@ -344,7 +359,7 @@ defmodule BlogApp.Blog do
 end
 ```
 
-#### Check Conflict
+### Check Conflict
 
 `check_conflict_version_posts/2` implementation.
 
@@ -375,7 +390,7 @@ end
 ```
 
 
-#### Storing Record Changes 
+### Storing Record Changes 
 
 `record_created_posts/2` & `record_updated_posts/2` implementation.
 `upsert_posts/3` handle both create & update case.
@@ -450,7 +465,7 @@ defmodule BlogApp.Blog do
 end
 ```
 
-### Pull
+## Pull
 
 ```elixir
 # lib/blog_app/sync.ex
