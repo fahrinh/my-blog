@@ -82,9 +82,22 @@ Response:
         "deleted": [
             "2b130e52-079d-4b31-9f42-ce257cf546f0"
         ]
+    },
+    "comments": {
+        "created": [],
+        "updated": [
+            {
+                "id": "1e945c88-baf2-4db7-aa39-286b6865b3fb",
+                "comment": "That's good!"
+            }
+        ],
+        "deleted": []
     }
 }
 ```
+
+- `created` and `updated` is an array of object containing created / updated records
+- `deleted` is an array of string of deleted IDs
 
 ## Sync Flow
 
