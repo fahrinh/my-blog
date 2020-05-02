@@ -4,26 +4,14 @@ date: 2020-04-24T21:27:12+07:00
 categories: ["Elixir"]
 tags: ["Phoenix", "WatermelonDB", "Sync Backend"]
 draft: true
+summary: WatermelonDB is a reactive database for React frontend application that supports data synchronization. This tutorial explains the concept and shows step by step how to build sync backend using Phoenix (Elixir)
 ---
 
 TODO:
 - Table explaining columns on client & db. LocalDB: column, ServerDB: column, description, on create, on update, on delete.
 - Seq Diagram: 1. Existing WatermelonDB flow 2. Proposed solution. 'People' = Client
 
-First and foremost, this tutorial will use Phoenix 1.5.1
 
-
-
-```shell
-$ mix archive.uninstall phx_new
-$ mix archive.install hex phx_new 1.5.1
-```
-
-```shell
-$ mix phx.new blog_app
-```
-
-<!--more-->
 
 # WatermelonDB
 
@@ -66,6 +54,17 @@ No specified response
 
 ## Sync Flow
 
+First and foremost, this tutorial will use Phoenix 1.5.1
+
+
+```shell
+$ mix archive.uninstall phx_new
+$ mix archive.install hex phx_new 1.5.1
+```
+
+```shell
+$ mix phx.new blog_app
+```
 
 ```shell
 $ docker run --name blog-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=blog_app_dev -d -p 5432:5432 postgres:12.2
