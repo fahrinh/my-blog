@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+
+title WatermelonDB
+
+rectangle "App Client 01" as AppClient01 {
+    rectangle "Watermelon" as WM01 {
+        database "LocalDB" as LocalDB01
+    }
+}
+
+rectangle "App Client 02" as AppClient02 {
+    rectangle "Watermelon" as WM02 {
+        database "LocalDB" as LocalDB02
+    }
+}
+
+rectangle "Server / Backend" as Server {
+    database "ServerDB" as ServerDB
+}
+
+WM01 <--> Server : sync data
+WM02 <--> Server : sync data
+
+@enduml
