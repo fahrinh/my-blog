@@ -43,12 +43,12 @@ Response:
 
 Request:
 
-- `changes` is a JSON containing data changes on the client (local) that will be   
-- `lastPulledAt`
+- `changes` is a JSON containing data changes on the client (local) that will be applied by server on server DB.
+- `lastPulledAt` is a timestamp retrieved in the last/previous pull operation. This is for conflict detection. Server compare modification time of each row of `changes` on server DB with `lastPulledAt`. If it is greater, there is a conflict.
 
 Response:
 
-No specified response
+- No specified response
 
 ## `changes` Example
 
