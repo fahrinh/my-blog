@@ -125,8 +125,21 @@ I followed its suggestion to use auto-incrementing counter. In my approach, for 
 
 ## Workaround for Sync on Client Side
 
-I don't know why this library designed to behave like this. It raised [an issue for complaining/questioning about that](https://github.com/Nozbe/WatermelonDB/issues/649).
+There is a problem if we use [sync code example (`synchronize()`) for client side on the documentation](https://nozbe.github.io/WatermelonDB/Advanced/Sync.html#using-synchronize).
 
+Please look again at diagram <a href="#sync-flow">Sync Flow</a> above.
+
+In **4**, after WatermelonDB receives `changes` & `timestamp`, internally, `timestamp` value is set as `lastPulledAt` for the next pull operation. That is not problem.
+
+At first, I assume it will have same mechanism for push operation. We got new `timestamp` that will be become the next `lastPulledAt`. But I am wrong. Look at **10**. No response at all for push operation. It means for the next pull operation, we will get changes that we've just pushed on previous push operation. Well, it actually mentioned [in the documentation](https://nozbe.github.io/WatermelonDB/Advanced/Sync.html#current-limitations):
+
+ > Current limitations
+ 
+ > 2. During next sync pull, changes we've just pushed will be pulled again, which is unnecessary. It would be better if server, during push, also pulled local changes since `lastPulledAt` and responded with NEW timestamp to be treated as `lastPulledAt`.
+
+
+I don't know why this library designed to behave like this. It raised [an issue for complaining/questioning about that](https://github.com/Nozbe/WatermelonDB/issues/649).
+So this is what I did for a temporary solution/workaround:
 
 # Application Example: Blog App
 
