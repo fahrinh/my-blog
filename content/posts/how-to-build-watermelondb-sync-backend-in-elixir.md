@@ -17,7 +17,7 @@ TODO:
 
 [WatermelonDB](https://github.com/Nozbe/WatermelonDB) is a reactive database for React frontend application that supports data synchronization.
 
-<gambar>
+![WatermelonDB](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/watermelondb.plantuml)
 
 What I like about this database is you can bring your own sync backend (HTTP-based) as long as it complies with this spec:
 
