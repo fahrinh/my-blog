@@ -101,7 +101,16 @@ Response:
 
 ## Sync Flow
 
+![WatermelonDB Sync Flow](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/watermelondb-sync-flow.plantuml)
+
 # Proposed Alternative Sync Approach
+
+While in iterations of prototyping sync backend, I took another approach for tracking changes and made a workaround for 
+
+
+## Application Example: Blog App
+
+
 
 ## Sync Backend Implementation
 First and foremost, this tutorial will use Phoenix 1.5.1
