@@ -168,12 +168,6 @@ This tutorial only covers how to build sync backend implementation. Frontend (Re
 
 ## Database Design
 
-- LocalDB: `Post` schema
-- ServerDB: `posts` table
-
-LocalDB | ServerDB
-Field, Type | Column, Type
-
 <table>
 <thead>
   <tr>
@@ -181,11 +175,11 @@ Field, Type | Column, Type
     <th colspan="2">ServerDB</th>
   </tr>
   <tr>
-    <th colspan="2">WatermelonDB</th>
-    <th colspan="2">PostgreSQL</th>
+    <th colspan="2">WatermelonDB</br><code>posts</code> table</th>
+    <th colspan="2">PostgreSQL</br><code>posts</code> table</th>
   </tr>
   <tr>
-    <th>Field</th>
+    <th>Column</th>
     <th>Type</th>
     <th>Column</th>
     <th>Type</th>
