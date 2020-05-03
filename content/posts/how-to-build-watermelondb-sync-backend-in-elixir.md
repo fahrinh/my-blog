@@ -262,24 +262,40 @@ This tutorial only covers how to build sync backend implementation. Frontend (Re
 </tbody>
 </table>
 
-You can omit `created_at_server` and `update_at_server` because these columns are not necessary anymore for tracking changes (we already have `version` & `version_created` columns).
-I just want to know when data changed at server.
-
 ## Determining Data Changes
 
-To detect which records were created, updated, or deleted on server DB since `lastPulledVersion`:
+For push operation:
 
-- is created since `lastPulledVersion`?
+- when a new data is created:
+  - `version = nextval('version_seq')`
+  - `version_created = nextval('version_seq')`
+  - `created_at_server = current time`
+  - `updated_at_server = current time`
+- when a data is updated:
+  - `version = nextval('version_seq')`
+  - `updated_at_server = current time`
+- when a data is deleted:
+  - `version = nextval('version_seq')`
+  - `deleted_at_server = current time`
 
-  `version_created > lastPulledVersion AND deleted_at_server IS NULL`
+For pull operation:
 
-- is updated since `lastPulledVersion`?
+- retrieve all data that were changed since `lastPulledVersion`:
 
-  `version_created > lastPulledVersion AND deleted_at_server IS NULL`
+  `SELECT * FROM posts WHERE version_created > <lastPulledVersion> OR version > <lastPulledVersion>`
+- Then categorize which records were created, updated, or deleted :
+  - created
 
-|  created | updated | deleted
-| ------|-----|------|
-| abc | |
+    `version_created > <lastPulledVersion> AND deleted_at_server IS NULL`
+
+  - updated
+
+    `created_at_server != updated_at_server AND deleted_at_server IS NULL`
+
+  - deleted
+
+    `deleted_at_server IS NOT NULL`
+
 
 # Sync Backend Implementation
 First and foremost, this tutorial will use Phoenix 1.5.1
