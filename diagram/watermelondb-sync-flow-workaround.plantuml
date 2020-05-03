@@ -1,5 +1,5 @@
 @startuml
-title WatermelonDB Sync Flow
+title WatermelonDB Sync Flow + Workaround
 
 actor User
 
@@ -12,9 +12,15 @@ activate ReactApp
 
 autonumber
 
-ReactApp -> ReactApp : init ""latestVersionOfSession""
+ReactApp -> ReactApp : ""init latestVersionOfSession""
 
-ReactApp -> BackendApp : ""pull(lastPulledAt)""
+ReactApp -> ReactApp : call 1st ""synchronize()""
+activate ReactApp #Yellow
+
+ReactApp -> ReactApp : ""pullChanges(lastPulledAt)""
+activate ReactApp #OrangeRed
+
+ReactApp -> BackendApp : ""GET pull(lastPulledAt)""
 activate BackendApp
 
 BackendApp -> ServerDB : get ""changes"" \n& ""latestVersion""
@@ -23,10 +29,16 @@ ServerDB -> BackendApp : ""changes"" \n& ""latestVersion""
 BackendApp -> ReactApp : ""changes"" \n& ""latestVersion""
 deactivate BackendApp
 
+ReactApp -> ReactApp : set\n""latestVersionOfSession = latestVersion""
+ReactApp -> ReactApp : apply ""changes"" on localDB
 ReactApp -> ReactApp : for next pull, set\n""lastPulledAt"" = ""latestVersion""
-ReactApp -> ReactApp : set\n""latestVersionOfSession"" = ""latestVersion""
 
-ReactApp -> BackendApp : ""push(lastPulledAt,""\n""changes)""
+deactivate ReactApp
+
+ReactApp -> ReactApp : ""pushChanges(changes,""\n""lastPulledAt)""
+activate ReactApp #DeepSkyBlue
+
+ReactApp -> BackendApp : ""POST push(lastPulledAt,""\n""changes)""
 activate BackendApp
 
 BackendApp -> ServerDB : check conflict\nusing ""lastPulledAt""
@@ -38,9 +50,27 @@ ServerDB -> BackendApp
 BackendApp -> BackendApp : get ""latestVersion""\nof recorded ""changes""
 
 BackendApp -> ReactApp : ""latestVersion""
+ReactApp -> ReactApp : set\n""latestVersionOfSession = latestVersion""
+
 deactivate BackendApp
 
-ReactApp -> ReactApp : set\n""latestVersionOfSession"" = ""latestVersion""
+deactivate ReactApp
+deactivate ReactApp
+
+ReactApp -> ReactApp : call 2nd ""synchronize()""
+activate ReactApp #Yellow
+
+ReactApp -> ReactApp : ""pullChanges(lastPulledAt)""
+activate ReactApp #OrangeRed
+
+ReactApp -> ReactApp : for next pull, set\n""lastPulledAt"" = ""latestVersionOfSession""
+deactivate ReactApp
+
+ReactApp -> ReactApp : ""pushChanges(changes,""\n""lastPulledAt)""
+activate ReactApp #DeepSkyBlue
+
+ReactApp -> ReactApp : do nothing
+deactivate ReactApp
 
 autonumber stop
 
