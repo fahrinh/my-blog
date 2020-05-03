@@ -172,17 +172,18 @@ This tutorial only covers how to build sync backend implementation. Frontend (Re
 <thead>
   <tr>
     <th colspan="2">LocalDB</th>
-    <th colspan="2">ServerDB</th>
+    <th colspan="3">ServerDB</th>
   </tr>
   <tr>
     <th colspan="2">WatermelonDB</br><code>posts</code> table</th>
-    <th colspan="2">PostgreSQL</br><code>posts</code> table</th>
+    <th colspan="3">PostgreSQL</br><code>posts</code> table</th>
   </tr>
   <tr>
     <th>Column</th>
     <th>Type</th>
     <th>Column</th>
     <th>Type</th>
+    <th>Default</th>
   </tr>
 </thead>
 <tbody>
@@ -191,39 +192,85 @@ This tutorial only covers how to build sync backend implementation. Frontend (Re
     <td>string (UUID format)</td>
     <td><code>id</code></td>
     <td>uuid (binary)</td>
+    <td>-</td>
   </tr>
   <tr align="center">
     <td><code>title</code></td>
     <td>string</td>
     <td><code>title</code></td>
     <td>varchar</td>
+    <td>-</td>
   </tr>
   <tr align="center">
     <td><code>content</code></td>
     <td>string</td>
     <td><code>content</code></td>
     <td>varchar</td>
+    <td>-</td>
   </tr>
   <tr align="center">
     <td><code>likes</code></td>
     <td>number</td>
     <td><code>likes</code></td>
     <td>integer</td>
+    <td>-</td>
   </tr>
   <tr align="center">
     <td><code>created_at</code></td>
     <td>number</br>(UNIX timestamp in ms)</td>
     <td><code>created_at</code></td>
     <td>timestamp (in μs)</td>
+    <td>-</td>
   </tr>
   <tr align="center">
     <td><code>updated_at</code></td>
     <td>number</br>(UNIX timestamp in ms)</td>
     <td><code>updated_at</code></td>
     <td>timestamp (in μs)</td>
+    <td>-</td>
+  </tr>
+  <tr align="center">
+    <td>-</td>
+    <td>-</td>
+    <td><code>created_at_server</code></td>
+    <td>timestamp (in μs)</td>
+    <td>-</td>
+  </tr>
+  <tr align="center">
+    <td>-</td>
+    <td>-</td>
+    <td><code>updated_at_server</code></td>
+    <td>timestamp (in μs)</td>
+    <td>-</td>
+  </tr>
+  <tr align="center">
+    <td>-</td>
+    <td>-</td>
+    <td><code>deleted_at_server</code></td>
+    <td>timestamp (in μs)</td>
+    <td>-</td>
+  </tr>
+  <tr align="center">
+    <td>-</td>
+    <td>-</td>
+    <td><code>version</code></td>
+    <td>bigint</td>
+    <td><code>nextval('version_seq')</code></td>
+  </tr>
+  <tr align="center">
+    <td>-</td>
+    <td>-</td>
+    <td><code>version_created</code></td>
+    <td>bigint</td>
+    <td><code>nextval('version_seq')</code></td>
   </tr>
 </tbody>
 </table>
+
+You can omit `created_at_server` and `update_at_server` because these columns are not necessary anymore for tracking changes (we already have `version` & `version_created` columns).
+I just want to know when data changed at server.
+
+
 
 # Sync Backend Implementation
 First and foremost, this tutorial will use Phoenix 1.5.1
