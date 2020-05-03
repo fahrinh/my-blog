@@ -157,7 +157,7 @@ So this is what I did for a temporary solution/workaround:
 - on first `synchronize()`, pull & push operation retrive `latestVersion` (**8** & **19**) then set it as `latestVersionOfSession` value
 - on second `synchronize()`, pull operation only set `lastPulledAt = latestVersionOfSession` for the next pull (**22**). Push operation does nothing.
 
-This is woraround for the client side. The code is available on the next post (TODO: link).
+This is workaround for the client side. The code is available on the next post (TODO: link).
 
 # Application Example: BlogApp
 
