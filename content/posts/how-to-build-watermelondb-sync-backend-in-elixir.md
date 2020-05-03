@@ -166,7 +166,70 @@ User can submit, edit, and delete a post content. If user click Sync button, dat
 
 This tutorial only covers how to build sync backend implementation. Frontend (ReactJS) implementation is available on the next post (TODO: link).
 
+## Database Design
 
+- LocalDB: `Post` schema
+- ServerDB: `posts` table
+
+LocalDB | ServerDB
+Field, Type | Column, Type
+
+<table>
+<thead>
+  <tr>
+    <th colspan="2">LocalDB</th>
+    <th colspan="2">ServerDB</th>
+  </tr>
+  <tr>
+    <th colspan="2">WatermelonDB</th>
+    <th colspan="2">PostgreSQL</th>
+  </tr>
+  <tr>
+    <th>Field</th>
+    <th>Type</th>
+    <th>Column</th>
+    <th>Type</th>
+  </tr>
+</thead>
+<tbody>
+  <tr align="center">
+    <td><code>id</code></td>
+    <td>string (UUID format)</td>
+    <td><code>id</code></td>
+    <td>uuid (binary)</td>
+  </tr>
+  <tr align="center">
+    <td><code>title</code></td>
+    <td>string</td>
+    <td><code>title</code></td>
+    <td>varchar</td>
+  </tr>
+  <tr align="center">
+    <td><code>content</code></td>
+    <td>string</td>
+    <td><code>content</code></td>
+    <td>varchar</td>
+  </tr>
+  <tr align="center">
+    <td><code>likes</code></td>
+    <td>number</td>
+    <td><code>likes</code></td>
+    <td>integer</td>
+  </tr>
+  <tr align="center">
+    <td><code>created_at</code></td>
+    <td>number</br>(UNIX timestamp in ms)</td>
+    <td><code>created_at</code></td>
+    <td>timestamp (in μs)</td>
+  </tr>
+  <tr align="center">
+    <td><code>updated_at</code></td>
+    <td>number</br>(UNIX timestamp in ms)</td>
+    <td><code>updated_at</code></td>
+    <td>timestamp (in μs)</td>
+  </tr>
+</tbody>
+</table>
 
 # Sync Backend Implementation
 First and foremost, this tutorial will use Phoenix 1.5.1
