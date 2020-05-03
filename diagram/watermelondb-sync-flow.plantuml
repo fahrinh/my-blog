@@ -12,7 +12,13 @@ activate ReactApp
 
 autonumber
 
-ReactApp -> BackendApp : ""pull(lastPulledAt)""
+ReactApp -> ReactApp : ""synchronize()""
+activate ReactApp #Yellow
+
+ReactApp -> ReactApp : ""pullChanges(lastPulledAt)""
+activate ReactApp #OrangeRed
+
+ReactApp -> BackendApp : ""GET pull(lastPulledAt)""
 activate BackendApp
 
 BackendApp -> ServerDB : get ""changes"" \n& ""timestamp""
@@ -21,9 +27,15 @@ ServerDB -> BackendApp : ""changes"" \n& ""timestamp""
 BackendApp -> ReactApp : ""changes"" \n& ""timestamp""
 deactivate BackendApp
 
+ReactApp -> ReactApp : apply ""changes"" on localDB
 ReactApp -> ReactApp : for next pull, set\n""lastPulledAt"" = ""timestamp""
 
-ReactApp -> BackendApp : ""push(lastPulledAt,""\n""changes)""
+deactivate ReactApp
+
+ReactApp -> ReactApp : ""pushChanges(changes,""\n""lastPulledAt)""
+activate ReactApp #DeepSkyBlue
+
+ReactApp -> BackendApp : ""POST push(lastPulledAt,""\n""changes)""
 activate BackendApp
 
 BackendApp -> ServerDB : check conflict\nusing ""lastPulledAt""
@@ -33,6 +45,8 @@ BackendApp -> ServerDB : if no conflict,\nrecord ""changes""
 ServerDB -> BackendApp
 
 BackendApp -> ReactApp
+deactivate ReactApp
+
 deactivate BackendApp
 
 autonumber stop
