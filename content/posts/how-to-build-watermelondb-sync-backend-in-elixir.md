@@ -7,12 +7,6 @@ draft: true
 summary: WatermelonDB is a reactive database for React frontend application that supports data synchronization. This tutorial explains the concept and shows step by step how to build sync backend using Phoenix (Elixir)
 ---
 
-TODO:
-- Table explaining columns on client & db. LocalDB: column, ServerDB: column, description, on create, on update, on delete.
-- Seq Diagram: 1. Existing WatermelonDB flow 2. Proposed solution. 'People' = Client
-
-
-
 # WatermelonDB
 
 [WatermelonDB](https://github.com/Nozbe/WatermelonDB) is a reactive database for React frontend application that supports data synchronization.
