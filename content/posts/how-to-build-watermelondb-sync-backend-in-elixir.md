@@ -585,15 +585,17 @@ defmodule BlogApp.Blog do
       attrs
       |> Enum.map(fn row ->
         row
-        |> Map.put("inserted_at", now)
-        |> Map.put("updated_at", now)
-        |> Map.take(["id", "title", "content", "likes", "inserted_at", "updated_at"])
+        |> Map.put("created_at", row["created_at"] * 1000 |> DateTime.from_unix!(:microsecond))
+        |> Map.put("updated_at", row["updated_at"] * 1000 |> DateTime.from_unix!(:microsecond))
+        |> Map.put("created_at_server", now)
+        |> Map.put("updated_at_server", now)
+        |> Map.take(["id", "title", "content", "likes", "created_at", "updated_at", "created_at_server", "updated_at_server"])
         |> key_to_atom()
       end)
 
     Multi.insert_all(multi, name, Post, data,
       conflict_target: :id,
-      on_conflict: {:replace_all_except, [:id, :version_created, :inserted_at, :deleted_at]},
+      on_conflict: {:replace_all_except, [:id, :version_created, :created_at_server, :deleted_at_server]},
       returning: true
     )
   end
