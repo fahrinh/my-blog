@@ -621,19 +621,20 @@ defmodule BlogApp.Blog do
 
   def record_deleted_posts(%Multi{} = multi, deleted_ids) do
     now = DateTime.utc_now()
-  
+
     data =
       deleted_ids
       |> Enum.map(fn id ->
-        %{id: id, deleted_at: now}
+        %{id: id, deleted_at_server: now}
       end)
 
     Multi.insert_all(multi, :delete_posts, Post, data,
       conflict_target: :id,
-      on_conflict: {:replace, [:deleted_at, :version]},
+      on_conflict: {:replace, [:deleted_at_server, :version]},
       returning: true
     )
   end
+  # ...
 end
 ```
 
