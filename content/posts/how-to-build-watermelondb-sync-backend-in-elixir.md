@@ -317,6 +317,7 @@ $ mix ecto.gen.migration create_version_seq
 ```
 
 ```elixir
+# priv/repo/migrations/xxx_create_version_seq.exs
 defmodule BlogApp.Repo.Migrations.CreateVersionSeq do
   use Ecto.Migration
 
@@ -331,7 +332,7 @@ $ mix ecto.migrate
 ```
 
 ```shell
-$ mix phx.gen.schema Blog.Post posts title:string content:string likes:integer deleted_at:utc_datetime_usec version:integer version_created:integer --binary-id
+$ mix phx.gen.schema Blog.Post posts title:string content:string likes:integer created_at:utc_datetime_usec updated_at:utc_datetime_usec created_at_server:utc_datetime_usec updated_at_server:utc_datetime_usec deleted_at_server:utc_datetime_usec version:integer version_created:integer --binary-id
 ```
 
 Edit `xxx_create_posts.exs`
@@ -347,15 +348,18 @@ defmodule BlogApp.Repo.Migrations.CreatePosts do
       add :title, :string
       add :content, :string
       add :likes, :integer
-      add :deleted_at, :utc_datetime_usec
+      add :created_at, :utc_datetime_usec
+      add :updated_at, :utc_datetime_usec
+      add :created_at_server, :utc_datetime_usec
+      add :updated_at_server, :utc_datetime_usec
+      add :deleted_at_server, :utc_datetime_usec
 -     add :version, :integer
 +     add :version, :bigint, default: fragment("nextval('version_seq')")
 -     add :version_created, :integer
 +     add :version_created, :bigint, default: fragment("nextval('version_seq')")
--     timestamps()
-+     timestamps([type: :utc_datetime_usec])
-    end
 
+-     timestamps()
+    end
   end
 end
 ```
@@ -372,17 +376,20 @@ defmodule BlogApp.Blog.Post do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-+  @derive {Jason.Encoder, only: [:id, :title, :content, :likes]}
++ @derive {Jason.Encoder, only: [:id, :title, :content, :likes]}
   schema "posts" do
-    field :content, :string
-    field :deleted_at, :utc_datetime_usec
-    field :likes, :integer
     field :title, :string
+    field :content, :string
+    field :likes, :integer
+    field :created_at, :utc_datetime_usec
+    field :updated_at, :utc_datetime_usec
+    field :created_at_server, :utc_datetime_usec
+    field :updated_at_server, :utc_datetime_usec
+    field :deleted_at_server, :utc_datetime_usec
     field :version, :integer
     field :version_created, :integer
 
 -   timestamps()
-+   timestamps([type: :utc_datetime_usec])
   end
 
   # ...
