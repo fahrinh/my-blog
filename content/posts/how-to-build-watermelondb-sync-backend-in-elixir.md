@@ -679,9 +679,9 @@ defmodule BlogApp.Blog do
       posts_latest
       |> Enum.group_by(fn post ->
         cond do
-          post.version_created > last_pulled_version and is_nil(post.deleted_at) -> :created
-          post.inserted_at != post.updated_at and is_nil(post.deleted_at) -> :updated
-          not is_nil(post.deleted_at) -> :deleted
+          post.version_created > last_pulled_version and is_nil(post.deleted_at_server) -> :created
+          post.created_at_server != post.updated_at_server and is_nil(post.deleted_at_server) -> :updated
+          not is_nil(post.deleted_at_server) -> :deleted
         end
       end)
       |> Map.update(:created, [], fn posts -> posts end)
