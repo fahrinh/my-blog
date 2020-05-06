@@ -292,6 +292,10 @@ For pull operation:
 
 # Sync Backend Implementation
 
+Sync Backend consists of four main components: `SyncController`, `Sync` context, `Blog` context, and `Repo`. If you come from another framework, _context_ is kind of like _service_.
+
+![BlogApp Architecture](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/blog-app-architecture.plantuml)
+
 We will build sync backend using Elixir 1.10 and Phoenix 1.5.1
 
 Install Phoenix 1.5.1:
