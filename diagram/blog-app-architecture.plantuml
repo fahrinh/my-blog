@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+
+cloud "~~~" as Internet
+
+node "BlogApp Sync Backend API" as API {
+    [SyncController] as Cntrl
+    [Sync Context] as Sync
+    [Blog Context] as Blog
+    [Repo] as Repo
+}
+
+database DB
+ 
+Internet --> Cntrl
+Cntrl --> Sync
+Sync --> Blog
+Blog --> Repo
+Repo --> DB
+
+@enduml
