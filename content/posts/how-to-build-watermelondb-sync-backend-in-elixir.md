@@ -482,9 +482,9 @@ Changes have to be recorded in a DB transaction.
 If there is a failed data operation, every operation must be rolled back.
 
 In a push operation, data that will be recorded are also annotated with a `push_id`.
-Later on, after push operation has been successfully applied, all changes since `last_pulled_version` are retrieved to become push response except those have already been applied (filtered with `push_id`)
+Later on, after push operation has been successfully applied, all changes since `last_pulled_version` are retrieved to become push response except those have already been applied (filtered with `push_id`).
 
-_Create context `BlogApp.Sync`_;
+`BlogApp.Sync.push/2`:
 
 ```elixir
 # lib/blog_app/sync.ex
@@ -504,7 +504,7 @@ defmodule BlogApp.Sync do
 end
 ```
 
-_Let's implement `record_posts/2` on `BlogApp.Blog` context_
+`BlogApp.Blog.record_posts/4`:
 
 ```elixir
 # lib/blog_app/blog.ex
@@ -535,9 +535,11 @@ defmodule BlogApp.Blog do
 end
 ```
 
-### Check Conflict
+### Conflict Detection
 
-`check_conflict_version_posts/2` implementation.
+Conflict happens when other users/clients have modified data that we're pushing.
+
+`Blog.check_conflict_version_posts/2` :
 
 ```elixir
 # lib/blog_app/blog.ex
@@ -565,11 +567,13 @@ defmodule BlogApp.Blog do
 end
 ```
 
+### Storing Record Changes
 
-### Storing Record Changes 
+Data changes are saved on database in bulk using `INSERT INTO CONFLICT` on PostgreSQL.
+This is also known as UPSERT (update or insert).
 
-`record_created_posts/2` & `record_updated_posts/2` implementation.
-`upsert_posts/3` handle both create & update case.
+`Blog.upsert_posts/3` handle both create & update case.
+`Blog.record_created_posts/2` & `Blog.record_updated_posts/2` :
 
 ```elixir
 # lib/blog_app/blog.ex
@@ -616,7 +620,7 @@ defmodule BlogApp.Blog do
 end
 ```
 
-`record_deleted_posts/2` implementation
+`Blog.record_deleted_posts/3` :
 
 ```elixir
 # lib/blog_app/blog.ex
@@ -646,6 +650,9 @@ end
 
 ## Pull
 
+Pull endpoint calls `Sync.pull` without `push_id` specified.
+It means all data changes since `last_pulled_version` become the response of pull operation.
+
 ```elixir
 # lib/blog_app/sync.ex
 defmodule BlogApp.Sync do
@@ -668,7 +675,7 @@ defmodule BlogApp.Sync do
 end
 ```
 
-Let's implement `Blog.list_posts_changes/1`
+`Blog.list_posts_changes/2`:
 
 ```elixir
 # lib/blog_app/blog.ex
