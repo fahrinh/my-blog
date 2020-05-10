@@ -12,7 +12,7 @@ activate ReactApp
 
 autonumber
 
-ReactApp -> ReactApp : ""init latestVersionOfSession""
+ReactApp -> ReactApp : init ""latestVersionOfSession""\n& ""changesOfSession""
 
 ReactApp -> ReactApp : call 1st ""synchronize()""
 activate ReactApp #Yellow
@@ -29,7 +29,7 @@ ServerDB -> BackendApp : ""changes"" \n& ""latestVersion""
 BackendApp -> ReactApp : ""changes"" \n& ""latestVersion""
 deactivate BackendApp
 
-ReactApp -> ReactApp : set\n""latestVersionOfSession = latestVersion""
+ReactApp -> ReactApp : set\n""latestVersionOfSession = latestVersion""\n""changesOfSession = changes""
 ReactApp -> ReactApp : apply ""changes"" on localDB
 ReactApp -> ReactApp : for next pull, set\n""lastPulledAt"" = ""latestVersion""
 
@@ -44,13 +44,13 @@ activate BackendApp
 BackendApp -> ServerDB : check conflict\nusing ""lastPulledAt""
 ServerDB -> BackendApp
 
-BackendApp -> ServerDB : if no conflict,\nrecord ""changes""
+BackendApp -> ServerDB : if no conflict,\nrecord ""changes""\nwith ""push_id""
 ServerDB -> BackendApp
 
-BackendApp -> BackendApp : get ""latestVersion""\nof recorded ""changes""
+BackendApp -> BackendApp : get ""latestVersion""\n& ""changes""\n(filtered out by\n""push_id"")
 
-BackendApp -> ReactApp : ""latestVersion""
-ReactApp -> ReactApp : set\n""latestVersionOfSession = latestVersion""
+BackendApp -> ReactApp : ""latestVersion"" & ""changes""
+ReactApp -> ReactApp : set\n""latestVersionOfSession = latestVersion""\n""changesOfSession = changes""
 
 deactivate BackendApp
 
@@ -63,7 +63,7 @@ activate ReactApp #Yellow
 ReactApp -> ReactApp : ""pullChanges(lastPulledAt)""
 activate ReactApp #OrangeRed
 
-ReactApp -> ReactApp : for next pull, set\n""lastPulledAt"" = ""latestVersionOfSession""
+ReactApp -> ReactApp : apply on LocalDB\n""lastPulledAt"" = ""latestVersionOfSession""\n""changes"" = ""changesOfSession""
 deactivate ReactApp
 
 ReactApp -> ReactApp : ""pushChanges(changes,""\n""lastPulledAt)""
