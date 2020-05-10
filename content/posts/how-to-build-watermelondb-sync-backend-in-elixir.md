@@ -372,6 +372,7 @@ defmodule BlogApp.Repo.Migrations.CreatePosts do
       add :created_at_server, :utc_datetime_usec
       add :updated_at_server, :utc_datetime_usec
       add :deleted_at_server, :utc_datetime_usec
+      add :push_id, :integer
 -     add :version, :integer
 +     add :version, :bigint, default: fragment("nextval('version_seq')")
 -     add :version_created, :integer
@@ -403,6 +404,7 @@ defmodule BlogApp.Blog.Post do
     field :created_at_server, :utc_datetime_usec
     field :updated_at_server, :utc_datetime_usec
     field :deleted_at_server, :utc_datetime_usec
+    field :push_id, :integer
     field :version, :integer
     field :version_created, :integer
 
