@@ -484,9 +484,9 @@ end
 defmodule BlogApp.Sync do
   # ...
 
-  def pull(last_pulled_version) do
+  def pull(last_pulled_version, push_id \\ nil) do
     %{latest_version: latest_version_posts, changes: posts_changes} =
-      Blog.list_posts_changes(last_pulled_version)
+      Blog.list_posts_changes(last_pulled_version, push_id)
 
     latest_version =
       [last_pulled_version, latest_version_posts]
@@ -508,7 +508,7 @@ Let's implement `Blog.list_posts_changes/1`
 # lib/blog_app/blog.ex
 defmodule BlogApp.Blog do
   # ...
-  def list_posts_changes(last_pulled_version) do
+  def list_posts_changes(last_pulled_version, push_id) do
     posts_latest =
       Post
       |> where([p], p.version_created > ^last_pulled_version or p.version > ^last_pulled_version)
@@ -516,6 +516,7 @@ defmodule BlogApp.Blog do
 
     posts_changes =
       posts_latest
+      |> Enum.reject(fn post -> is_just_pushed(post, push_id) end)
       |> Enum.group_by(fn post ->
         cond do
           post.version_created > last_pulled_version and is_nil(post.deleted_at_server) -> :created
@@ -531,6 +532,9 @@ defmodule BlogApp.Blog do
 
     %{latest_version: latest_version, changes: posts_changes}
   end
+  # ...
+  defp is_just_pushed(_post, push_id) when is_nil(push_id), do: false
+  defp is_just_pushed(post, push_id), do: post.push_id == push_id
 end
 ```
 
