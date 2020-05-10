@@ -722,3 +722,8 @@ end
 ```shell
 $ mix phx.server
 ```
+
+# What's Next ?
+
+We have build a sync backend for WatermelonDB frontend application.
+On the next post, we will continue to code the frontend application with sync capability: [Building an Offline First React Web App Using WatermelonDB in Phoenix (Elixir)]({{< ref "building-an-offline-first-react-web-app-using-watermelondb-in-phoenix-elixir.md" >}})
