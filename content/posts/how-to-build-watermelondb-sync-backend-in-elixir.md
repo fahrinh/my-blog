@@ -716,3 +716,9 @@ defmodule BlogApp.Blog do
   defp is_just_pushed(post, push_id), do: post.push_id == push_id
 end
 ```
+
+## Run the Application
+
+```shell
+$ mix phx.server
+```
