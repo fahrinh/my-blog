@@ -477,67 +477,6 @@ defmodule BlogAppWeb.SyncController do
 end
 ```
 
-## Pull
-
-```elixir
-# lib/blog_app/sync.ex
-defmodule BlogApp.Sync do
-  # ...
-
-  def pull(last_pulled_version, push_id \\ nil) do
-    %{latest_version: latest_version_posts, changes: posts_changes} =
-      Blog.list_posts_changes(last_pulled_version, push_id)
-
-    latest_version =
-      [last_pulled_version, latest_version_posts]
-      |> Enum.max()
-
-    %{
-      "latestVersion" => latest_version,
-      "changes" => %{
-        "posts" => posts_changes
-      }
-    }
-  end
-end
-```
-
-Let's implement `Blog.list_posts_changes/1`
-
-```elixir
-# lib/blog_app/blog.ex
-defmodule BlogApp.Blog do
-  # ...
-  def list_posts_changes(last_pulled_version, push_id) do
-    posts_latest =
-      Post
-      |> where([p], p.version_created > ^last_pulled_version or p.version > ^last_pulled_version)
-      |> Repo.all()
-
-    posts_changes =
-      posts_latest
-      |> Enum.reject(fn post -> is_just_pushed(post, push_id) end)
-      |> Enum.group_by(fn post ->
-        cond do
-          post.version_created > last_pulled_version and is_nil(post.deleted_at_server) -> :created
-          post.created_at_server != post.updated_at_server and is_nil(post.deleted_at_server) -> :updated
-          not is_nil(post.deleted_at_server) -> :deleted
-        end
-      end)
-      |> Map.update(:created, [], fn posts -> posts end)
-      |> Map.update(:updated, [], fn posts -> posts end)
-      |> Map.update(:deleted, [], fn posts -> posts |> Enum.map(fn post -> post.id end) end)
-
-    latest_version = find_latest_version(posts_latest)
-
-    %{latest_version: latest_version, changes: posts_changes}
-  end
-  # ...
-  defp is_just_pushed(_post, push_id) when is_nil(push_id), do: false
-  defp is_just_pushed(post, push_id), do: post.push_id == push_id
-end
-```
-
 ## Push
 
 Create context `BlogApp.Sync`
@@ -715,5 +654,66 @@ defmodule BlogApp.Blog do
     )
   end
   # ...
+end
+```
+
+## Pull
+
+```elixir
+# lib/blog_app/sync.ex
+defmodule BlogApp.Sync do
+  # ...
+
+  def pull(last_pulled_version, push_id \\ nil) do
+    %{latest_version: latest_version_posts, changes: posts_changes} =
+      Blog.list_posts_changes(last_pulled_version, push_id)
+
+    latest_version =
+      [last_pulled_version, latest_version_posts]
+      |> Enum.max()
+
+    %{
+      "latestVersion" => latest_version,
+      "changes" => %{
+        "posts" => posts_changes
+      }
+    }
+  end
+end
+```
+
+Let's implement `Blog.list_posts_changes/1`
+
+```elixir
+# lib/blog_app/blog.ex
+defmodule BlogApp.Blog do
+  # ...
+  def list_posts_changes(last_pulled_version, push_id) do
+    posts_latest =
+      Post
+      |> where([p], p.version_created > ^last_pulled_version or p.version > ^last_pulled_version)
+      |> Repo.all()
+
+    posts_changes =
+      posts_latest
+      |> Enum.reject(fn post -> is_just_pushed(post, push_id) end)
+      |> Enum.group_by(fn post ->
+        cond do
+          post.version_created > last_pulled_version and is_nil(post.deleted_at_server) -> :created
+          post.created_at_server != post.updated_at_server and is_nil(post.deleted_at_server) -> :updated
+          not is_nil(post.deleted_at_server) -> :deleted
+        end
+      end)
+      |> Map.update(:created, [], fn posts -> posts end)
+      |> Map.update(:updated, [], fn posts -> posts end)
+      |> Map.update(:deleted, [], fn posts -> posts |> Enum.map(fn post -> post.id end) end)
+
+    latest_version = find_latest_version(posts_latest)
+
+    %{latest_version: latest_version, changes: posts_changes}
+  end
+  # ...
+  defp is_just_pushed(_post, push_id) when is_nil(push_id), do: false
+  defp is_just_pushed(post, push_id), do: post.push_id == push_id
 end
 ```
