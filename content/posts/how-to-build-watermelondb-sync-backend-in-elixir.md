@@ -410,7 +410,6 @@ defmodule BlogApp.Blog.Post do
 
 -   timestamps()
   end
-
   # ...
 end
 ```
@@ -495,7 +494,6 @@ defmodule BlogApp.Sync do
 
     pull(last_pulled_version, push_id)
   end
-
   # ...
 end
 ```
@@ -646,7 +644,6 @@ end
 # lib/blog_app/sync.ex
 defmodule BlogApp.Sync do
   # ...
-
   def pull(last_pulled_version, push_id \\ nil) do
     %{latest_version: latest_version_posts, changes: posts_changes} =
       Blog.list_posts_changes(last_pulled_version, push_id)
