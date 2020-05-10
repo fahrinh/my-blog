@@ -146,14 +146,14 @@ So this is what I did for a temporary solution/workaround:
 - on first `synchronize()`, pull & push operation retrieve `latestVersion` & `changes` (**8** & **19**) then set it as `latestVersionOfSession` & `changesOfSession` value
 - on second `synchronize()`, pull operation only set `lastPulledAt = latestVersionOfSession` & `changes = changesOfSession` to be applied on LocalDB (**22**). Push operation does nothing.
 
-This is workaround for the client side. The code is available on the next post (TODO: link).
+This is workaround for the client side. The code is available on [the next post]({{< ref "building-an-offline-first-react-web-app-using-watermelondb-in-phoenix-elixir.md" >}}).
 
 # Application Example: BlogApp
 
 Let's say we want to build a blog app (web based) that supports data synchronization.
 User can submit, edit, and delete a post content. If user click Sync button, data located on current browser will be synced to server. So if user open another browser (another client device), data will be automically synced and available on that browser.
 
-This tutorial only covers how to build sync backend implementation. Frontend (ReactJS) implementation is available on the next post (TODO: link).
+This tutorial only covers how to build sync backend implementation. Frontend (ReactJS) implementation is available on the next post: [Building an Offline First React Web App Using WatermelonDB in Phoenix (Elixir)]({{< ref "building-an-offline-first-react-web-app-using-watermelondb-in-phoenix-elixir.md" >}}).
 
 ## Database Design
 
