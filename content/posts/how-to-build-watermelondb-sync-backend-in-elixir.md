@@ -478,7 +478,13 @@ end
 
 ## Push
 
-Create context `BlogApp.Sync`
+Changes have to be recorded in a DB transaction.
+If there is a failed data operation, every operation must be rolled back.
+
+In a push operation, data that will be recorded are also annotated with a `push_id`.
+Later on, after push operation has been successfully applied, all changes since `last_pulled_version` are retrieved to become push response except those have already been applied (filtered with `push_id`)
+
+_Create context `BlogApp.Sync`_;
 
 ```elixir
 # lib/blog_app/sync.ex
@@ -498,7 +504,7 @@ defmodule BlogApp.Sync do
 end
 ```
 
-Let's implement `record_posts/2` on `BlogApp.Blog` context
+_Let's implement `record_posts/2` on `BlogApp.Blog` context_
 
 ```elixir
 # lib/blog_app/blog.ex
