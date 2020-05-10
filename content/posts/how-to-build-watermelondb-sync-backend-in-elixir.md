@@ -141,7 +141,7 @@ So this is what I did for a temporary solution/workaround:
 
 ![WatermelonDB Sync Flow Workaround](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/watermelondb-sync-flow-workaround.plantuml)
 
-- introduce a new variable `latestVersionOfSession` (**1**) 
+- introduce variable `latestVersionOfSession` & `changesOfSession` (**1**) 
 - call `synchronize()` twice (**2** & **20**)
 - on first `synchronize()`, pull & push operation retrieve `latestVersion` & `changes` (**8** & **19**) then set it as `latestVersionOfSession` & `changesOfSession` value
 - on second `synchronize()`, pull operation only set `lastPulledAt = latestVersionOfSession` & `changes = changesOfSession` to be applied on LocalDB (**22**). Push operation does nothing.
