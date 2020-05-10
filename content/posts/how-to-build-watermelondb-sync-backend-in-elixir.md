@@ -487,17 +487,13 @@ defmodule BlogApp.Sync do
   alias BlogApp.{Repo, Blog}
 
   def push(changes, last_pulled_version) do
-    Ecto.Multi.new()
-    |> Blog.record_posts(changes["posts"], last_pulled_version)
-    |> Repo.transaction()
-    |> case do
-      {:ok, %{get_latest_version_posts: latest_version_posts}} ->
-        latest_version =
-          [last_pulled_version, latest_version_posts]
-          |> Enum.max()
+    push_id = Enum.random(1..1_000_000_000)
 
-        %{ "latestVersion" => latest_version }
-    end
+    Ecto.Multi.new()
+    |> Blog.record_posts(changes["posts"], last_pulled_version, push_id)
+    |> Repo.transaction()
+
+    pull(last_pulled_version, push_id)
   end
 
   # ...
@@ -514,7 +510,7 @@ defmodule BlogApp.Blog do
   alias BlogApp.Repo
   alias BlogApp.Blog.Post
 
-  def record_posts(%Multi{} = multi, post_changes, last_pulled_version) do
+  def record_posts(%Multi{} = multi, post_changes, last_pulled_version, push_id) do
     multi
     |> Multi.run(:check_conflict_posts, fn _, _changes ->
       case check_conflict_version_posts(post_changes, last_pulled_version) do
@@ -522,29 +518,16 @@ defmodule BlogApp.Blog do
         :conflict -> {:error, :conflict}
       end
     end)
-    |> record_created_posts(post_changes["created"])
-    |> record_updated_posts(post_changes["updated"])
-    |> record_deleted_posts(post_changes["deleted"])
-    |> Multi.run(:get_latest_version_posts, fn _, prev_results ->
-      %{
-        create_posts: {_, created_posts},
-        delete_posts: {_, deleted_posts},
-        update_posts: {_, updated_posts}
-      } = prev_results
-
-      latest_version = find_latest_version(created_posts ++ updated_posts ++ deleted_posts)
-
-      {:ok, latest_version}
-    end)
+    |> record_created_posts(post_changes["created"] |> set_push_id(push_id))
+    |> record_updated_posts(post_changes["updated"] |> set_push_id(push_id))
+    |> record_deleted_posts(post_changes["deleted"], push_id)
   end
-
   # ...
-
-  defp find_latest_version(posts) do
+  defp set_push_id(posts, push_id) do
     posts
-    |> Enum.flat_map(fn post -> [post.version, post.version_created] end)
-    |> Enum.max(fn -> 0 end)
+    |> Enum.map(fn post -> post |> Map.put("push_id", push_id) end)
   end
+  # ...
 end
 ```
 
@@ -608,7 +591,7 @@ defmodule BlogApp.Blog do
         |> Map.put("updated_at", row["updated_at"] * 1000 |> DateTime.from_unix!(:microsecond))
         |> Map.put("created_at_server", now)
         |> Map.put("updated_at_server", now)
-        |> Map.take(["id", "title", "content", "likes", "created_at", "updated_at", "created_at_server", "updated_at_server"])
+        |> Map.take(["id", "title", "content", "likes", "created_at", "updated_at", "created_at_server", "updated_at_server", "push_id"])
         |> key_to_atom()
       end)
 
@@ -635,21 +618,21 @@ end
 # lib/blog_app/blog.ex
 defmodule BlogApp.Blog do
   # ...
-  def record_deleted_posts(%Multi{} = multi, deleted_ids) when is_nil(deleted_ids),
+  def record_deleted_posts(%Multi{} = multi, deleted_ids, _push_id) when is_nil(deleted_ids),
     do: multi
 
-  def record_deleted_posts(%Multi{} = multi, deleted_ids) do
+  def record_deleted_posts(%Multi{} = multi, deleted_ids, push_id) do
     now = DateTime.utc_now()
 
     data =
       deleted_ids
       |> Enum.map(fn id ->
-        %{id: id, deleted_at_server: now}
+        %{id: id, deleted_at_server: now, push_id: push_id}
       end)
 
     Multi.insert_all(multi, :delete_posts, Post, data,
       conflict_target: :id,
-      on_conflict: {:replace, [:deleted_at_server, :version]},
+      on_conflict: {:replace, [:deleted_at_server, :version, :push_id]},
       returning: true
     )
   end
@@ -711,6 +694,12 @@ defmodule BlogApp.Blog do
     latest_version = find_latest_version(posts_latest)
 
     %{latest_version: latest_version, changes: posts_changes}
+  end
+
+  defp find_latest_version(posts) do
+    posts
+    |> Enum.flat_map(fn post -> [post.version, post.version_created] end)
+    |> Enum.max(fn -> 0 end)
   end
   # ...
   defp is_just_pushed(_post, push_id) when is_nil(push_id), do: false
