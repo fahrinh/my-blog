@@ -1,0 +1,18 @@
+@startsalt
+
+{^"App"
+  {^"PostForm"
+    Title    | "     "
+    Content  | "     "
+    Likes    | "     "
+    [Add New/Reset] | [  Save   ] | [ Sync ]
+  }
+  {^"PostList"
+    {#
+    | Title | Content | Likes | Created At | Updated At | Actions | *
+    PostRow | *       |    *  |      *     |      *     |[Edit]   | [Delete] 
+    }
+  }
+}
+
+@endsalt
