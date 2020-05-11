@@ -401,3 +401,11 @@ export default async function syncData(database) {
     })
 }
 ```
+
+## Run the Application
+
+```shell
+$ mix phx.server
+```
+
+Open <http://localhost:4000>
