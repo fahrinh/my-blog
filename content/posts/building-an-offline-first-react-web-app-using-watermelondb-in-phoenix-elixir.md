@@ -1,5 +1,5 @@
 ---
-title: "Building an Offline First React Web App Using WatermelonDB in Phoenix (Elixir)"
+title: "Building an Offline-First React Web App Using WatermelonDB in Phoenix (Elixir)"
 date: 2020-04-29T10:58:39+07:00
 categories: ["React", "Phoenix"]
 tags: ["WatermelonDB", "Offline First App"]
