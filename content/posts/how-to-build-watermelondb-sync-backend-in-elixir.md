@@ -422,8 +422,8 @@ $ mix ecto.migrate
 
 Sync endpoint will be handled by:
 
-- push: `POST /api/sync?lastPulledVersion=<lastPulledVersion>`
-- pull: `GET /api/sync?lastPulledVersion=<lastPulledVersion>`
+- push: `POST /api/sync/push?lastPulledVersion=<lastPulledVersion>`
+- pull: `GET /api/sync/pull?lastPulledVersion=<lastPulledVersion>`
 
 Edit `lib/blog_app_web/router.ex`
 
