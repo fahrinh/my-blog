@@ -353,6 +353,7 @@ On [the previous post]({{< ref "how-to-build-watermelondb-sync-backend-in-elixir
 Please read that first.
 
 ```js
+// assets/js/blog/sync.js
 import { synchronize } from '@nozbe/watermelondb/sync'
 
 export default async function syncData(database) {
