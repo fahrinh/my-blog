@@ -317,3 +317,31 @@ export default withDatabase(withObservables([], ({ database }) => ({
     posts: database.collections.get('posts').query().observe(),
 }))(PostList))
 ```
+
+## `PostRow.js`
+
+`PostRow` is also reactive component. It will automatically rerender the component whenever data changes (i.e. `post` get updated).
+
+```react
+// assets/js/blog/PostRow.js
+import React from 'react';
+import withObservables from "@nozbe/with-observables";
+
+const PostRow = ({ post, onEdit, onDelete }) => (
+    <tr key={post._raw.id}>
+        <td>{post.title}</td>
+        <td>{post.content}</td>
+        <td>{post.likes}</td>
+        <td>{post.createdAt.toString()}</td>
+        <td>{post.updatedAt.toString()}</td>
+        <td>
+            <button onClick={(e) => {onEdit(post)}}>Edit</button>
+            <button onClick={(e) => {onDelete(post)}}>Delete</button>
+        </td>
+    </tr>
+)
+
+export default withObservables(["post"], ({ post }) => ({
+    post: post.observe()
+}))(PostRow)
+```
