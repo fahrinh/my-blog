@@ -58,29 +58,20 @@ import "phoenix_html"
 import "./blog"
 ```
 
-For now, it only displays "Hello World". We will code it later.
+## Setup `Database`
 
 ```react
 // assets/js/blog/index.js
 import React from 'react';
 import { render } from 'react-dom';
-
-const rootElement = document.getElementById('blog-app');
-
-render(<div> Hello World! </div>, rootElement);
-```
-
-## Setup `Database`
-
-```react
-// assets/js/blog/index.js
-
-// ...
 import { Database } from '@nozbe/watermelondb'
 import LokiJSAdapter from '@nozbe/watermelondb/adapters/lokijs'
+import DatabaseProvider from '@nozbe/watermelondb/DatabaseProvider'
 
 import schema from './model/schema'
 import Post from './model/Post'
+
+import App from './App'
 
 const adapter = new LokiJSAdapter({
   schema,
@@ -100,7 +91,14 @@ const database = new Database({
   ],
   actionsEnabled: true,
 })
-// ...
+
+const rootElement = document.getElementById('blog-app');
+
+render(
+  <DatabaseProvider database={database}>
+    <App />
+  </DatabaseProvider>,
+  rootElement);
 ```
 
 ### Schema
@@ -109,7 +107,7 @@ const database = new Database({
 // assets/js/blog/model/schema.js
 import { appSchema, tableSchema } from '@nozbe/watermelondb'
 
-export const mySchema = appSchema({
+const mySchema = appSchema({
     version: 1,
     tables: [
         tableSchema({
@@ -124,12 +122,15 @@ export const mySchema = appSchema({
         })
     ]
 })
+
+export default mySchema
 ```
 
 ### Model
 
 ```react
 // assets/js/blog/model/Post.js
+import { Model } from '@nozbe/watermelondb'
 import { field, date, readonly } from '@nozbe/watermelondb/decorators'
 
 export default class Post extends Model {
