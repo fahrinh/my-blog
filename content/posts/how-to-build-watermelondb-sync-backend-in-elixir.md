@@ -3,7 +3,7 @@ title: "How to Build WatermelonDB Sync Backend in Elixir"
 date: 2020-04-24T21:27:12+07:00
 categories: ["Elixir", "Phoenix"]
 tags: ["WatermelonDB", "Sync Backend"]
-draft: true
+draft: false
 summary: WatermelonDB is a reactive database for React frontend application that supports data synchronization. This tutorial explains the concept and shows step by step how to build sync backend using Phoenix (Elixir)
 ---
 
