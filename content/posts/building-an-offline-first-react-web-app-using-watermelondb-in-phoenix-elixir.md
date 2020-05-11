@@ -406,6 +406,7 @@ export default async function syncData(database) {
 ## Run the Application
 
 ```shell
+$ cd ../ # cd to project directory (blog_app)
 $ mix phx.server
 ```
 
