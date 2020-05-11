@@ -717,11 +717,17 @@ defmodule BlogApp.Blog do
 end
 ```
 
-## Run the Application
+## Run the Backend
 
 ```shell
 $ mix phx.server
 ```
+
+Sync endpoint will be available on 
+- push: `POST http://localhost:4000/api/sync/push?lastPulledVersion=<lastPulledVersion>`
+- pull: `GET http://localhost:4000/api/sync/pull?lastPulledVersion=<lastPulledVersion>`
+
+
 
 # What's Next ?
 
