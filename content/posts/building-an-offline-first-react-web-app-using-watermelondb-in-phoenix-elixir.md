@@ -115,7 +115,7 @@ const mySchema = appSchema({
             columns: [
                 { name: 'title', type: 'string' },
                 { name: 'content', type: 'string' },
-                { name: 'likes', type: 'number', isOptional: true },
+                { name: 'likes', type: 'number' },
                 { name: 'created_at', type: 'number' },
                 { name: 'updated_at', type: 'number' },
             ]
