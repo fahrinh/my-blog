@@ -144,14 +144,73 @@ export default class Post extends Model {
 }
 ```
 
-## App
+## `App.js`
+
+![BlogApp Mockup](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/blog-app-mockup.plantuml)
+
+`<App/>` consists of:
+
+- `<PostForm/>`
+- `<PostList/>`
+  - `<PostRow/>` for each row data
+
+As parent component, `App` handles all actions related to form (`Add New/Reset`, `Save`, `Sync`) and row data (`Edit`, `Delete`).
 
 ```react
-// assets/js/blog/index.js
-// ...
-import App from './App'
-// ...
-const rootElement = document.getElementById('blog-app');
-render(<App db={database} />, rootElement);
-```
+// assets/js/blog/App.js
+import React, { useState } from 'react';
+import { useDatabase } from '@nozbe/watermelondb/hooks'
+import { v4 as uuidv4 } from 'uuid';
 
+import syncData from './sync'
+import PostList from './PostList'
+import PostForm from './PostForm'
+
+export default function App() {
+    const database = useDatabase()
+    const [post, setPost] = useState()
+    const postsCollection = database.collections.get("posts");
+
+    function clearPost() {
+        setPost(undefined)
+    }
+
+    function onEdit(selectedPost) {
+        setPost(selectedPost)
+    }
+
+    async function onDelete(selectedPost) {
+        await database.action(async () => {
+            await selectedPost.markAsDeleted()
+        })
+    }
+
+    async function createPost(inputtedForm) {
+        await database.action(async () => {
+            const newPost = await postsCollection.create(post => {
+                post._raw.id = uuidv4()
+                post.title = inputtedForm.title
+                post.content = inputtedForm.content
+                post.likes = inputtedForm.likes
+            });
+        })
+    }
+
+    async function updatePost(currentPost, inputtedForm) {
+        await database.action(async () => {
+            await currentPost.update(post => {
+                post.title = inputtedForm.title
+                post.content = inputtedForm.content
+                post.likes = inputtedForm.likes
+            });
+        })
+    }
+
+    return (
+        <div>
+            <PostForm post={post} clearPost={clearPost} createPost={createPost} updatePost={updatePost} syncData={() => syncData(database)} />
+            <PostList onEdit={onEdit} onDelete={onDelete} />
+        </div>
+    )
+}
+```
