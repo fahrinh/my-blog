@@ -411,3 +411,7 @@ $ mix phx.server
 ```
 
 Open <http://localhost:4000>
+
+## Final Source Code
+
+All code (sync backend and frontend app) is available on <https://github.com/fahrinh/blog-labs/tree/master/2020-04-24/blog_app>
