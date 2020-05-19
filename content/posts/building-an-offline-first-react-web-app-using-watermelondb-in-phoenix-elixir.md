@@ -4,6 +4,7 @@ date: 2020-04-29T10:58:39+07:00
 categories: ["React", "Phoenix"]
 tags: ["WatermelonDB", "Offline First App"]
 draft: false
+images : ["images/blog-app-mockup.png"]
 ---
 
 We will build a web application that supports local db synced with remote db. This post is a continuation from the previous post: [How to Build WatermelonDB Sync Backend in Elixir]({{< ref "how-to-build-watermelondb-sync-backend-in-elixir.md" >}}).
