@@ -79,6 +79,7 @@ enableRobotsTXT = true
 
   author = "Fahri Nurul Hidayat"
   logo = "/apple-touch-icon.png"
+  images = ["apple-touch-icon.png"]
   header = "Fahri NH"
 
   twitter = "fahri_nh"
