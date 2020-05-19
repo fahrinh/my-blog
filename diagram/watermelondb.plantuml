@@ -4,13 +4,13 @@ left to right direction
 title WatermelonDB
 
 rectangle "App Client 01" as AppClient01 {
-    rectangle "Watermelon" as WM01 {
+    rectangle "//WatermelonDB//" as WM01 {
         database "LocalDB" as LocalDB01
     }
 }
 
 rectangle "App Client 02" as AppClient02 {
-    rectangle "Watermelon" as WM02 {
+    rectangle "//WatermelonDB//" as WM02 {
         database "LocalDB" as LocalDB02
     }
 }
