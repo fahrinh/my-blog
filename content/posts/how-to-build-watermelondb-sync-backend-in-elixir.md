@@ -12,7 +12,7 @@ summary: WatermelonDB is a reactive database for React frontend application that
 
 [WatermelonDB](https://github.com/Nozbe/WatermelonDB) is a reactive database for React frontend application that supports data synchronization.
 
-![WatermelonDB](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/watermelondb.plantuml)
+![WatermelonDB](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/watermelondb.plantuml)
 
 What I like about this database is you can bring your own sync backend (HTTP-based) as long as it complies with this spec:
 
@@ -98,7 +98,7 @@ Response:
 
 Based on the documentation and [sync code example (`synchronize()`) on client side]((https://nozbe.github.io/WatermelonDB/Advanced/Sync.html#using-synchronize)), this is what will be expected from sync backend:
 
-![WatermelonDB Sync Flow](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/watermelondb-sync-flow.plantuml)
+![WatermelonDB Sync Flow](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/watermelondb-sync-flow.plantuml)
 
 # Proposed Alternative Sync Approach
 
@@ -140,7 +140,7 @@ I don't know why this library designed to behave like this. It raised [an issue 
 
 So this is what I did for a temporary solution/workaround:
 
-![WatermelonDB Sync Flow Workaround](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/watermelondb-sync-flow-workaround.plantuml)
+![WatermelonDB Sync Flow Workaround](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/watermelondb-sync-flow-workaround.plantuml)
 
 - introduce variable `latestVersionOfSession` & `changesOfSession` (**1**) 
 - call `synchronize()` twice (**2** & **20**)
@@ -295,7 +295,7 @@ For pull operation:
 
 Sync Backend consists of four main components: `SyncController`, `Sync` context, `Blog` context, and `Repo`. If you come from another framework, _context_ is kind of like _service_.
 
-![BlogApp Architecture](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/blog-app-architecture.plantuml)
+![BlogApp Architecture](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/blog-app-architecture.plantuml)
 
 We will build sync backend using Elixir 1.10 and Phoenix 1.5.1
 
