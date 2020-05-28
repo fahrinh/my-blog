@@ -30,14 +30,13 @@ enableRobotsTXT = true
   # style = "friendly"
   # style = "fruity" # no diff
   # style = "solarized-light"
-  # style = "solarized-light"
   # style = "github"
-  # style = "emacs"
+  style = "emacs"
   # style = "paraiso-dark"
   # style = "solarized-dark256"
   # style = "dracula"
   # style = "pastie"
-  style = "monokai"
+  # style = "monokai"
 
 # Multi-lingual mode config
 # There are different options to translate files
