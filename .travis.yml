@@ -48,4 +48,4 @@ deploy:
   email: fahri.cyber@gmail.com
   name: "Fahri Nurul Hidayat"
   on:
-    branch: master
+    branch: eureka-theme
