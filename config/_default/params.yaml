@@ -1,0 +1,62 @@
+mainSections:
+  - posts
+description: A blog by Fahri Nurul Hidayat
+
+repoURL:
+# If it is a Github repo, leave blank
+repoEditURL:
+
+dateFormat:
+
+titleSeparator:
+
+# Options: auto, light and dark. Default is auto.
+colorScheme: auto
+
+# E.g. Person, Organization, LocalBusiness, Project, EducationalOrganization
+siteType: Person
+icon: images/icon.png
+publisherName: Fahri Nurul Hidayat 
+publisherLogo:
+
+highlight:
+  handler: highlightjs
+  
+  highlightjs:
+    # highlight.js doesn't bundle every language. So please specify additional languages you want here.
+    # See https://github.com/highlightjs/cdn-release/tree/master/build/languages for available languages.
+    languages:
+      - elixir
+      - javascript
+      - dart
+      - xml
+    # See https://github.com/highlightjs/cdn-release/tree/master/build/styles for available styles.
+    # style: solarized-light
+    # style: solarized-dark
+    # style: a11y-light
+    # style: arduino-light
+    # style: stackoverflow-light
+    # style: monokai-sublime
+    style: github
+    # style: zenburn
+    # style: xcode
+
+math:
+  handler: katex
+
+  # katex:
+  #   # Browse https://katex.org/docs/options.html to see the options available.
+  #   # KaTeX's Auto-render ignores `displayMode` property of the options, so this property will not work.
+  #   # You can list the key and value you want as below.
+  #   leqno:
+
+comment:
+  # Options: disqus and commento.
+  platform: disqus
+
+  disqus:
+    shortname: fahri-blog
+
+  commento:
+    # If self-hosting, please enter the url (e.g. https://commento.example.com) here. Otherwise leave empty.
+    url:
