@@ -5,7 +5,7 @@ language: go
 
 go:
   # - master # This gccuses automatically the latest version of go
-  - 1.14.1
+  - 1.15.8
 
 env:
   - GO111MODULE=on
@@ -26,7 +26,7 @@ install:
   # - go get github.com/spf13/hugo # This provides the latest version of Hugo to Travis CI
   - git clone https://github.com/gohugoio/hugo.git
   - cd hugo
-  - git checkout v0.68.3
+  - git checkout v0.80.0
   - go install --tags extended
   - cd ..
 
