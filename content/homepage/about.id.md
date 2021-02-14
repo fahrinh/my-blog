@@ -1,22 +1,19 @@
 ---
 title: Fahri Nurul Hidayat
 draft: false
-role: Software Engineer 
+role: Insinyur Perangkat Lunak
 avatar: images/icon.png
-bio: Aenean vel bibendum quam. Aliquam at mollis quam. Proin efficitur.
+bio: Baca blog saya dalam [bahasa Inggris](/posts) atau [bahasa Indonesia](/id/posts)
 <!-- organization: -->
 <!--   name: Example Organization -->
 <!--   url: https://example.com/ -->
 social:
-  - icon: envelope
-    iconPack: fas
-    url: mailto:example@example.com
   - icon: twitter
     iconPack: fab
-    url: https://example.com/
+    url: https://twitter.com/fahri_nh
   - icon: github
     iconPack: fab
-    url: https://example.com/
+    url: https://github.com/fahrinh
 
 weight: 1
 widget:
