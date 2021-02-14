@@ -62,7 +62,7 @@ import "./blog"
 
 ## Setup `Database`
 
-```react
+```js
 // assets/js/blog/index.js
 import React from 'react';
 import { render } from 'react-dom';
@@ -105,7 +105,7 @@ render(
 
 ### Schema
 
-```react
+```js
 // assets/js/blog/model/schema.js
 import { appSchema, tableSchema } from '@nozbe/watermelondb'
 
@@ -130,7 +130,7 @@ export default mySchema
 
 ### Model
 
-```react
+```js
 // assets/js/blog/model/Post.js
 import { Model } from '@nozbe/watermelondb'
 import { field, date, readonly } from '@nozbe/watermelondb/decorators'
@@ -158,7 +158,7 @@ export default class Post extends Model {
 
 As parent component, `App` handles all actions related to form (`Add New/Reset`, `Save`, `Sync`) and row data (`Edit`, `Delete`).
 
-```react
+```js
 // assets/js/blog/App.js
 import React, { useState } from 'react';
 import { useDatabase } from '@nozbe/watermelondb/hooks'
@@ -219,7 +219,7 @@ export default function App() {
 
 ## `PostForm.js`
 
-```react
+```js
 // assets/js/blog/PostForm.js
 import React, { useState, useEffect } from 'react';
 
@@ -290,7 +290,7 @@ export default function PostForm({ post, clearPost, createPost, updatePost, sync
 
 `PostList` is enhanced component wrapped with `withObservables` to become reactive whenever data in `posts` get added or deleted.
 
-```react
+```js
 // assets/js/blog/PostList.js
 import React from 'react';
 import withObservables from "@nozbe/with-observables";
@@ -324,7 +324,7 @@ export default withDatabase(withObservables([], ({ database }) => ({
 
 `PostRow` is also reactive component. It will automatically rerender the component whenever data changes (i.e. `post` get updated).
 
-```react
+```js
 // assets/js/blog/PostRow.js
 import React from 'react';
 import withObservables from "@nozbe/with-observables";
