@@ -3,7 +3,7 @@ title: Fahri Nurul Hidayat
 draft: false
 role: Software Engineer 
 avatar: images/icon-512x512.png
-bio: Read my blog in [English](/posts) or [Bahasa](/id/posts)
+bio: <span class="content">Read my blog in [English](/posts) or [Bahasa](/id/posts)</span>
 <!-- organization: -->
 <!--   name: Example Organization -->
 <!--   url: https://example.com/ -->
