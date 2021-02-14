@@ -2,7 +2,7 @@
 title: Fahri Nurul Hidayat
 draft: false
 role: Insinyur Perangkat Lunak
-avatar: images/icon-512x512.png
+avatar: images/icon.png
 bio: <span class="content">Baca blog saya dalam [bahasa Inggris](/posts) atau [bahasa Indonesia](/id/posts)</span>
 <!-- organization: -->
 <!--   name: Example Organization -->
