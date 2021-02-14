@@ -3,7 +3,7 @@ title: Fahri Nurul Hidayat
 draft: false
 role: Software Engineer 
 avatar: images/icon-512x512.png
-bio: Aenean vel bibendum quam. Aliquam at mollis quam. Proin efficitur.
+bio: Read my blog in [English](/posts) or [Bahasa](/id/posts)
 <!-- organization: -->
 <!--   name: Example Organization -->
 <!--   url: https://example.com/ -->
