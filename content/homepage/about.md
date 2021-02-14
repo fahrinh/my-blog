@@ -2,7 +2,7 @@
 title: Fahri Nurul Hidayat
 draft: false
 role: Software Engineer 
-avatar: images/icon.png
+avatar: images/icon-512x512.png
 bio: Aenean vel bibendum quam. Aliquam at mollis quam. Proin efficitur.
 <!-- organization: -->
 <!--   name: Example Organization -->
