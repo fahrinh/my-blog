@@ -1,42 +1,38 @@
-# hugo server --minify --themesDir ... --baseURL=http://0.0.0.0:1313/theme/hugo-book/
+baseURL = "https://fahri.id/"
+# [en, zh-cn, fr, ...] determines default content language
+defaultContentLanguage = "en"
+# language code
+languageCode = "en"
+title = "Fahri NH"
 
-baseURL = 'https://fahri.id/'
-title = 'Fahri NH'
-theme = 'hugo-book'
+# Change the default theme to be use when building the site with Hugo
+theme = "DoIt"
 
-disqusShortname = "fahri-blog"
-googleAnalytics = "UA-92345605-1"
+# Author config
+[author]
+  name = "Fahri"
+  email = ""
+  link = ""
+  avatar = ""
+  gravatarEmail = ""
 
-paginate = 5
+[params]
+  # DoIt theme version
+  version = "0.2.X"
 
-# Book configuration
-disablePathToLower = true
-enableGitInfo = true
+[params.page.toc]
+  # whether to enable the table of the contents
+  enable = true
+  # DoIt NEW | 0.2.9 whether to keep the static table of the contents in front of the post
+  keepStatic = false
+  # whether to make the table of the contents in the sidebar automatically collapsed
+  auto = false
 
-enableRobotsTXT = true
-
-# Needed for mermaid/katex shortcodes
-[markup]
-[markup.goldmark.renderer]
-  unsafe = true
-
-[markup.tableOfContents]
-  startLevel = 1
-  endLevel = 4
-
-[markup.highlight]
-  # style = "native"
-  # style = "perldoc"
-  # style = "friendly"
-  # style = "fruity" # no diff
-  # style = "solarized-light"
-  # style = "github"
-  # style = "emacs"
-  # style = "paraiso-dark"
-  # style = "solarized-dark256"
-  # style = "dracula"
-  # style = "pastie"
-  style = "monokai"
+[params.page.code]
+  # whether to show the copy button of the code block
+  copy = true
+  # the maximum number of lines of displayed code by default
+  maxShownLines = 10000
 
 # Multi-lingual mode config
 # There are different options to translate files
@@ -51,85 +47,39 @@ enableRobotsTXT = true
   languageName = 'Bahasa'
   weight = 2
 
+
 [menu]
-[[menu.before]]
-  name = "Blog (English)"
-  url = "/posts"
-  weight = 1
+  [[menu.main]]
+    identifier = "posts"
+    # you can add extra information before the name (HTML format is supported), such as icons
+    pre = ""
+    # you can add extra information after the name (HTML format is supported), such as icons
+    post = ""
+    name = "Posts"
+    url = "/posts/"
+    # title will be shown when you hover on this menu link
+    title = ""
+    weight = 1
+  [[menu.main]]
+    identifier = "tags"
+    pre = ""
+    post = ""
+    name = "Tags"
+    url = "/tags/"
+    title = ""
+    weight = 2
+  [[menu.main]]
+    identifier = "categories"
+    pre = ""
+    post = ""
+    name = "Categories"
+    url = "/categories/"
+    title = ""
+    weight = 3
 
-[[menu.before]]
-  name = "Blog (Bahasa)"
-  url = "/id/posts"
-  weight = 2
-
-# [[menu.after]]
-#   name = "Github"
-#   url = "https://github.com/alex-shpak/hugo-book"
-#   weight = 10
-
-# [[menu.after]]
-#   name = "Hugo Themes"
-#   url = "https://themes.gohugo.io/hugo-book/"
-#   weight = 20
-
-[params]
-  title = "Fahri NH"
-  description = "A blog by Fahri Nurul Hidayat"
-
-  author = "Fahri Nurul Hidayat"
-  logo = "/apple-touch-icon.png"
-  images = ["apple-touch-icon.png"]
-  header = "Fahri NH"
-
-  twitter = "fahri_nh"
-  github = "fahrinh"
-
-  cloudflareAnalytics = "d43eac50adbd4c9a9ebf0a462ec99ad1"
-  
-  # (Optional, default true) Controls table of contents visibility on right side of pages.
-  # Start and end levels can be controlled with markup.tableOfContents setting.
-  # You can also specify this parameter per page in front matter.
-  BookToC = true
-
-  # (Optional, default none) Set the path to a logo for the book. If the logo is
-  # /static/logo.png then the path would be logo.png
-  # BookLogo = 'logo.png'
-
-  # (Optional, default none) Set leaf bundle to render as side menu
-  # When not specified file structure and weights will be used
-  # BookMenuBundle = '/menu'
-
-  # (Optional, default docs) Specify section of content to render as menu
-  # You can also set value to '*' to render all sections to menu
-  BookSection = 'docs'
-
-  # Set source repository location.
-  # Used for 'Last Modified' and 'Edit this page' links.
-  BookRepo = 'https://github.com/fahrinh/my-blog'
-
-  # Enable "Edit this page" links for 'doc' page type.
-  # Disabled by default. Uncomment to enable. Requires 'BookRepo' param.
-  # Path must point to 'content' directory of repo.
-  BookEditPath = 'edit/master/content'
-
-  # Configure the date format used on the pages
-  # - In git information
-  # - In blog posts
-  BookDateFormat = 'Jan 2, 2006'
-
-  # (Optional, default true) Enables search function with flexsearch,
-  # Index is built on fly, therefore it might slowdown your website.
-  # Configuration for indexing can be adjusted in i18n folder per language.
-  BookSearch = true
-
-  # (Optional, default true) Enables comments template on pages
-  # By default partals/docs/comments.html includes Disqus template
-  # See https://gohugo.io/content-management/comments/#configure-disqus
-  # Can be overwritten by same param in page frontmatter
-  BookComments = true
-
-  # /!\ This is an experimental feature, might be removed or changed at any time
-  # (Optional, experimental, default false) Enables portable links and link checks in markdown pages.
-  # Portable links meant to work with text editors and let you write markdown without {{< relref >}} shortcode
-  # Theme will print warning if page referenced in markdown does not exists.
-  BookPortableLinks = true
+# Markup related configuration in Hugo
+[markup]
+  # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
+  [markup.highlight]
+    # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
+    noClasses = false

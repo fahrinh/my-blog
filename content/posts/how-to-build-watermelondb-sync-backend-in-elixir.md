@@ -96,7 +96,7 @@ Response:
 
 ## Sync Flow
 
-Based on the documentation and [sync code example (`synchronize()`) on client side]((https://nozbe.github.io/WatermelonDB/Advanced/Sync.html#using-synchronize)), this is what will be expected from sync backend:
+Based on the documentation and [sync code example (`synchronize()`) on client side](https://nozbe.github.io/WatermelonDB/Advanced/Sync.html#using-synchronize), this is what will be expected from sync backend:
 
 ![WatermelonDB Sync Flow](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/fahrinh/my-blog/master/diagram/watermelondb-sync-flow.plantuml)
 
