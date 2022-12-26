@@ -43,6 +43,24 @@ theme = "DoIt"
     # whether to anonymize IP
     anonymizeIP = false
 
+# DoIt CHANGED | 0.2.0 Comment config
+[params.page.comment]
+  enable = true
+  [params.page.comment.giscus]
+    enable = true
+    # owner/repo
+    dataRepo = "fahrinh/fahrinh.github.io"
+    dataRepoId = "MDEwOlJlcG9zaXRvcnk5ODAzNzU4MA=="
+    dataCategory = "Announcements"
+    dataCategoryId = "DIC_kwDOBdfvTM4CTQ_z"
+    dataMapping = "pathname"
+    dataReactionsEnabled = "1"
+    dataEmitMetadata = "0"
+    dataInputPosition = "top"
+    lightTheme = "light"
+    darkTheme = "dark"
+    dataLang = "en"
+
 # Multi-lingual mode config
 # There are different options to translate files
 # See https://gohugo.io/content-management/multilingual/#translation-by-filename
