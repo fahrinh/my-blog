@@ -4,3 +4,6 @@
 [submodule "themes/hugo-book"]
 	path = themes/hugo-book
 	url = https://github.com/fahrinh/hugo-book
+[submodule "themes/DoIt"]
+	path = themes/DoIt
+	url = https://github.com/fahrinh/DoIt.git
