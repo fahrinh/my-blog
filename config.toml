@@ -60,6 +60,7 @@ theme = "DoIt"
     lightTheme = "light"
     darkTheme = "dark"
     dataLang = "en"
+    dataLoading = "lazy"
 
 # Multi-lingual mode config
 # There are different options to translate files
